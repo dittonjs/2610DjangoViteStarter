@@ -4,7 +4,6 @@ version = "0.1.0"
 description = ""
 authors = ["Joseph Ditton <jditton.atomic@gmail.com>"]
 readme = "README.md"
-packages = [{include = "django_vite_starter"}]
 
 [tool.poetry.dependencies]
 python = "^3.11"
