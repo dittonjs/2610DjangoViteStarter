@@ -7,11 +7,11 @@ This application is a hybrid MPA and SPA. It reuses all of the login stuff that 
 ## Initial Setup
 
 1. In the root directory, install the python dependencies `poetry install`
-3. In the `client` directory, install the javascript dependencies `npm install`
-7. In the `_server` directory, create a new file called `.env`
-8. Copy the contents of `_server/.env.example` into the newly created `.env` file.
-9. Activate the poetry env `poetry shell`
-10. In the `_server` directory, run the migrations `python manage.py migrate`
+2. In the `client` directory, install the javascript dependencies `npm install`
+3. In the `_server` directory, create a new file called `.env`
+4. Copy the contents of `_server/.env.example` into the newly created `.env` file.
+5. Activate the poetry env `poetry shell`
+6. In the `_server` directory, run the migrations `python manage.py migrate`
 
 ## Running the appliction
 1. In the `client` directory run `npm run dev`
