@@ -9,7 +9,6 @@ This application is a hybrid MPA and SPA. It reuses all of the login stuff that 
 2. Open the pyproject.toml file and change the `name` property. You should use `-` to separate words in your name for this property.
 
 ## Initial Setup
-1. Open the pyproject.toml file and
 1. In the root directory, install the python dependencies `poetry install`
 2. In the `client` directory, install the javascript dependencies `npm install`
 3. In the `_server` directory, create a new file called `.env`
