@@ -22,3 +22,6 @@ This application is a hybrid MPA and SPA. It reuses all of the login stuff that 
 1. In the `client` directory run `npm run dev`
 2. In the `_server` directory (with your poetry env activated) run `python manage.py runserver`
 3. Visit your application at `http://localhost:8000`
+
+## Using this project for future classes/personal projects
+Many students in the past have chosen to use this starter app template for projects in other classes like CS3450 and for personal projects. I strongly encourage you to do so! Please check with your other instructors before you use this project as a starting point for their classes. You may also want to add your name to the author field in the `pyproject.toml` file.
