@@ -1,28 +1,81 @@
-# 2610 Django + Vite Starting Point
-This project serves as a starting point you to use as a starting point for Django applications that use Vite as the asset server for development. You are welcome to us this project for all of your assignments beginning with Module 5.
+# General Planning
 
-## Strategy
-This application is a hybrid MPA and SPA. It reuses all of the login stuff that we did at the end of module 3 - there is a separate page for signup/signin. Once a user is logged in they are redirected to the / view which then renders the SPA application created using React and Vite.
+## URLs
 
-## Creating a new application
-1. Clone the repo `git clone git@github.com:dittonjs/2610DjangoViteStarter.git <your-new-project-name>`. Replace `<your-new-project-name>` with the name you want give to your project.
-   - If you are using GitHub for version control, a better option would be to fork the repository instead of clone it.
-3. Open the pyproject.toml file and change the `name` property. You should use `-` to separate words in your name for this property.
-4. This project was set up using Python 3.11. You might have an older version installed. If you run into an error later that says that your activated Python version isn't compatible, the in the pyproject.toml file, just change the version there to match the version that you have installed. If you do this, you need to make sure that the lock file gets regenerated. You can do this by running `poetry lock --no-update` or by simply deleting the poetry.lock file (it will get regenerated when you run poetry install)/
+I've thought of the following URLs, as well as where they'll lead.
+Of course, feel free to modify this list as needed.
 
-## Initial Setup
-1. Change the name property in the `pyproject.toml` file to be something unique to your project.
-1. In the root directory, install the python dependencies `poetry install`
-2. In the `client` directory, install the javascript dependencies `npm install`
-3. In the `_server` directory, create a new file called `.env`
-4. Copy the contents of `_server/.env.example` into the newly created `.env` file.
-5. Activate the poetry env `poetry shell`
-6. In the `_server` directory, run the migrations `python manage.py migrate`
+* `/`
+  * Welcome page
+  * Doesn't require login
+* `/log-in/`
+  * Redirects to `/` if the user is logged in
+  * Uses React scripts to prevent form submission without all fields filled
+    * Script will submit a `POST` to the same address to submit the login request
+* `/sign-up/`
+  * Redirects to `/` if the user is logged in
+  * Uses React scripts to prevent form submission without all fields filled
+    * Script will submit a `POST` to the same address to submit the login request
+  * Perhaps this and `/log-in/` could be a single page, with a clientside router between the two
+    forms
+* `/campaigns/`
+  * Redirects to `/` if the user is not logged in
+  * Displays all of the current user's campaigns
+    * Including the campaign description
+    * Perhaps a summary of how many locations, characters, etc. have been added to the campaign
+    * Whether the campaign is public or private
+* `/campaigns/{id}/`
+  * Redirects to `/` if the user is not logged in
+  * Sends 401 if the user is the wrong user
+  * Displays the campaign details
+    * Including the campaign description
+    * Includes links to all related resources (locations, characters, etc.)
+* `/campaigns/{id}/list/`
+  * where `list` is one of `notes`, `locations`, `organizations`, `characters`, or `events`
+  * Displays all Notes, Locations, etc. belonging to that campaign, with links to details for each
+* `/campaigns/{id}/list/{id}/`
+  * where `list` is one of `notes`, `locations`, `organizations`, `characters`, or `events`
+  * Displays the given Note, Location, etc., along with an `Edit` and `Delete` button
+  * All related locations, characters, etc. to the given item are linked
 
-## Running the appliction
-1. In the `client` directory run `npm run dev`
-2. In the `_server` directory (with your poetry env activated) run `python manage.py runserver`
-3. Visit your application at `http://localhost:8000`
+## Models
 
-## Using this project for future classes/personal projects
-Many students in the past have chosen to use this starter app template for projects in other classes like CS3450 and for personal projects. I strongly encourage you to do so! Please check with your other instructors before you use this project as a starting point for their classes. You may also want to add your name to the author field in the `pyproject.toml` file.
+These are what I've got thus far. The list can be expanded, of course, but this seems like a good
+starting point.
+
+* `User`
+  * Self-evident
+  * Saves first name, last name, username (unique), email (unique), and password hash
+* `Campaign`
+  * Saves the DM (`User`), a name, description, and all approved users
+    * Approved users cannot modify any fields, but they can view them
+    * The campaign can also be set to `public`, negating the approved users field
+* `Location`
+  * Must belong to a campaign
+    * I could change this if needed - for example, if the same land is used in multiple campaigns
+  * Knows its name, description, and neighboring locations
+  * Can be set to a Hostility setting (Friendly, Neutral, or Hostile. It'll be a dropdown)
+* `Organization`
+  * Belongs to a campaign and may belong to a location
+  * Bears related organizations (e.g., a military group that's related to a governing body) and a
+    Hostility setting
+* `Character`
+  * Belongs to a campaign and may belong to a location
+  * Has a Race, which is Human by default, but can be any text field
+  * Has a Class, which must be one of the 11 stock classes or Artificer
+    (It can be a dropdown for simplicity)
+  * Can belong to one or many organizations
+  * `PlayerCharacter`
+    * An extension of `Character`, adding a Player (`User`) field
+  * `NonPlayerCharacter`
+    * An extension of `Character`, adding a Hostility field
+* `Event`
+  * Basically holds any or all of the other fields, as well as a Time field (perhaps we should
+    create an internal calendar similar to Star Wars' BBY and ABY, where we just time everything
+    based on the campaign - BSC or ASC for Before Start of Campaign and After)
+  * Can also hold a Duration field, default 0
+* `Note`
+  * This is a general Note that can effectively hold any desired information, used mainly for if
+    someone needs to write a very quick note and convert it to another field later
+  * Perhaps we could incorporate a `Convert To...` button to transition seamlessly from a Note to
+    a Location, Event, Character, etc.
