@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.db import models
 
 
@@ -21,15 +22,6 @@ CLASSES = (
     ("S",  "Sorcerer"),
     ("W",  "Wizard"),
 )
-
-
-class User(models.Model):
-    id = models.BigAutoField(primary_key=True)
-    first_name = models.TextField()
-    last_name = models.TextField()
-    username = models.TextField(unique=True)
-    email = models.TextField(unique=True)
-    password_hash = models.TextField()
 
 
 class Campaign(models.Model):
