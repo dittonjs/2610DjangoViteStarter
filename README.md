@@ -8,16 +8,24 @@ Of course, feel free to modify this list as needed.
 * `/`
   * Welcome page
   * Doesn't require login
-* `/log-in/`
-  * Redirects to `/` if the user is logged in
+* `/users/`
+  * Redirects to `/users/login/` if the user is not logged in
+  * Redirects to `/users/{id}/` if the user is already logged in
+* `/users/login/`
+  * Redirects to `/users/{id}/` if the user is logged in
   * Uses React scripts to prevent form submission without all fields filled
     * Script will submit a `POST` to the same address to submit the login request
-* `/sign-up/`
+* `/users/new/`
   * Redirects to `/` if the user is logged in
   * Uses React scripts to prevent form submission without all fields filled
     * Script will submit a `POST` to the same address to submit the login request
   * Perhaps this and `/log-in/` could be a single page, with a clientside router between the two
     forms
+* `/users/{id}/`
+  * Sends 403 if the user is the wrong user
+  * Displays user's info, allowing them to Delete the user entirely
+* `/users/logout/`
+  * Logs out the current user, if any, and redirects to `/`
 * `/campaigns/`
   * Redirects to `/` if the user is not logged in
   * Displays all of the current user's campaigns
