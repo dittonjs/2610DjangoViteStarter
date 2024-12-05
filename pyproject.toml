@@ -1,15 +1,15 @@
 [tool.poetry]
-name = "django-vite-starter"
+name = "dnd-tool"
 version = "0.1.0"
 description = ""
-authors = ["Joseph Ditton <jditton.atomic@gmail.com>"]
+authors = ["Joseph Ditton <jditton.atomic@gmail.com>", "Toby Reid <toby.reid@usu.edu>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.11"
-django = "^5.0.0"
-requests = "^2.31.0"
-python-dotenv = "^1.0.0"
+python = "^3.12"
+django = "^5.1.4"
+requests = "^2.32.3"
+python-dotenv = "^1.0.1"
 
 
 [build-system]
