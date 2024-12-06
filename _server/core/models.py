@@ -48,7 +48,7 @@ class Organization(models.Model):
     name = models.TextField()
     location = models.ForeignKey(Location, on_delete=models.SET_NULL, null=True, blank=True)
     related_organizations = models.ManyToManyField('self', related_name='related_organizations')
-    description = models.TextField(null=True)
+    description = models.TextField(null=True, blank=True)
     hostility = models.TextField(choices=HOSTILITY, default="N")
 
 
@@ -62,7 +62,7 @@ class Character(models.Model):
     from_location = models.ForeignKey(Location, on_delete=models.SET_NULL, null=True, blank=True)
     organizations = models.ManyToManyField(Organization, related_name='character_organizations')
     related_characters = models.ManyToManyField('self', related_name='related_characters')
-    description = models.TextField(null=True)
+    description = models.TextField(null=True, blank=True)
 
 
 class PlayerCharacter(Character):
@@ -77,8 +77,8 @@ class Event(models.Model):
     id = models.BigAutoField(primary_key=True)
     campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE)
     title = models.TextField()
-    time = models.DateTimeField()
-    duration = models.DurationField(default=0, blank=True)
+    start_time = models.DateTimeField()
+    end_time = models.DateTimeField(null=True, blank=True)
     location = models.ForeignKey(Location, on_delete=models.SET_NULL, null=True, blank=True)
     involved_organizations = models.ManyToManyField(Organization,
                                                     related_name='event_organizations')
@@ -90,16 +90,14 @@ class Note(models.Model):
     id = models.BigAutoField(primary_key=True)
     campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE)
     title = models.TextField()
-    time = models.DateTimeField(null=True, blank=True)
-    duration = models.DurationField(default=0, null=True, blank=True)
+    start_time = models.DateTimeField(null=True, blank=True)
+    end_time = models.DateTimeField(null=True, blank=True)
     race = models.TextField(null=True, blank=True)
     clazz = models.TextField(choices=CLASSES, null=True, blank=True)
     level = models.PositiveSmallIntegerField(default=0, null=True, blank=True)
     hostility = models.TextField(choices=HOSTILITY, default="N", null=True, blank=True)
-    locations = models.ManyToManyField(Location, related_name='note_locations', null=True,
-                                       blank=True)
+    locations = models.ManyToManyField(Location, related_name='note_locations', blank=True)
     organizations = models.ManyToManyField(Organization, related_name='note_organizations',
-                                           null=True, blank=True)
-    characters = models.ManyToManyField(Character, related_name='note_characters', null=True,
-                                        blank=True)
+                                           blank=True)
+    characters = models.ManyToManyField(Character, related_name='note_characters', blank=True)
     content = models.TextField(null=True, blank=True)
