@@ -14,6 +14,7 @@ def events(req: HttpRequest, campaign_id: int) -> HttpResponse:
         return campaign_opt
 
     context = {
+        ASSET: ASSET_URL,
         CURRENT_USER: req.user,
         CURRENT_CAMPAIGN: campaign_opt,
         EVENTS: Event.objects.filter(campaign=campaign_opt),
@@ -30,6 +31,7 @@ def events_new(req: HttpRequest, campaign_id: int) -> HttpResponse:
 
     if req.method == "GET":
         context = {
+            ASSET: ASSET_URL,
             CURRENT_USER: req.user,
             CURRENT_CAMPAIGN: campaign_opt,
             LOCATIONS: Location.objects.filter(campaign=campaign_opt),
@@ -52,6 +54,7 @@ def events_id(req: HttpRequest, campaign_id: int, event_id: int) -> HttpResponse
         return event_opt
 
     context = {
+        ASSET: ASSET_URL,
         CURRENT_USER: req.user,
         CURRENT_CAMPAIGN: campaign_opt,
         CURRENT_EVENT: event_opt,
@@ -73,6 +76,7 @@ def events_edit(req: HttpRequest, campaign_id: int, event_id: int) -> HttpRespon
 
     if req.method == "GET":
         context = {
+            ASSET: ASSET_URL,
             CURRENT_USER: req.user,
             CURRENT_CAMPAIGN: campaign_opt,
             CURRENT_EVENT: event_opt,

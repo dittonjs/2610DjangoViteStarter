@@ -14,6 +14,7 @@ def locations(req: HttpRequest, campaign_id: int) -> HttpResponse:
         return campaign_opt
 
     context = {
+        ASSET: ASSET_URL,
         CURRENT_USER: req.user,
         CURRENT_CAMPAIGN: campaign_opt,
         LOCATIONS: Location.objects.filter(campaign=campaign_opt),
@@ -30,6 +31,7 @@ def locations_new(req: HttpRequest, campaign_id: int) -> HttpResponse:
 
     if req.method == "GET":
         context = {
+            ASSET: ASSET_URL,
             CURRENT_USER: req.user,
             CURRENT_CAMPAIGN: campaign_opt,
             LOCATIONS: Location.objects.filter(campaign=campaign_opt),
@@ -50,6 +52,7 @@ def locations_id(req: HttpRequest, campaign_id: int, location_id: int) -> HttpRe
         return location_opt
 
     context = {
+        ASSET: ASSET_URL,
         CURRENT_USER: req.user,
         CURRENT_CAMPAIGN: campaign_opt,
         CURRENT_LOCATION: location_opt,
@@ -74,6 +77,7 @@ def locations_edit(req: HttpRequest, campaign_id: int, location_id: int) -> Http
 
     if req.method == "GET":
         context = {
+            ASSET: ASSET_URL,
             CURRENT_USER: req.user,
             CURRENT_CAMPAIGN: campaign_opt,
             CURRENT_LOCATION: location_opt,

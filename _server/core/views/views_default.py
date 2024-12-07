@@ -9,13 +9,14 @@ from .utils import *
 
 # / Welcome page
 def index(req: HttpRequest) -> HttpResponse:
-    return render(req, "core/index.html", {CURRENT_USER: req.user})
+    return render(req, "core/index.html", {ASSET: ASSET_URL, CURRENT_USER: req.user})
 
 
 # /campaigns/
 @login_required
 def campaigns(req: HttpRequest) -> HttpResponse:
     context = {
+        ASSET: ASSET_URL,
         CURRENT_USER: req.user,
         CAMPAIGNS: Campaign.objects.filter(dm=req.user),
     }
@@ -27,10 +28,11 @@ def campaigns(req: HttpRequest) -> HttpResponse:
 def campaigns_new(req: HttpRequest) -> HttpResponse:
     if req.method == "GET":
         context = {
+            ASSET: ASSET_URL,
             CURRENT_USER: req.user,
             USERS: User.objects.all(),  # useful for adding users to approved users
         }
-        return render(req, "campaigns/new.html")
+        return render(req, "campaigns/new.html", context)
     # else it's POST, and it's a new campaign request
     return campaign_form(req)
 
@@ -43,6 +45,7 @@ def campaigns_id(req: HttpRequest, campaign_id: int) -> HttpResponse:
         return campaign_opt
 
     context = {
+        ASSET: ASSET_URL,
         CURRENT_USER: req.user,
         USER_IS_DM: req.user == campaign_opt.dm,
         CURRENT_CAMPAIGN: campaign_opt,
@@ -64,6 +67,7 @@ def campaigns_edit(req: HttpRequest, campaign_id: int) -> HttpResponse:
 
     if req.method == "GET":
         context = {
+            ASSET: ASSET_URL,
             CURRENT_USER: req.user,
             CURRENT_CAMPAIGN: campaign_opt,
             USERS: User.objects.all(),  # useful for adding users to approved users

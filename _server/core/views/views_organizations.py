@@ -14,6 +14,7 @@ def organizations(req: HttpRequest, campaign_id: int) -> HttpResponse:
         return campaign_opt
 
     context = {
+        ASSET: ASSET_URL,
         CURRENT_USER: req.user,
         CURRENT_CAMPAIGN: campaign_opt,
         ORGANIZATIONS: Organization.objects.filter(campaign=campaign_opt),
@@ -30,6 +31,7 @@ def organizations_new(req: HttpRequest, campaign_id: int) -> HttpResponse:
 
     if req.method == "GET":
         context = {
+            ASSET: ASSET_URL,
             CURRENT_USER: req.user,
             CURRENT_CAMPAIGN: campaign_opt,
             LOCATIONS: Location.objects.filter(campaign=campaign_opt),
@@ -87,6 +89,7 @@ def organizations_id(req: HttpRequest, campaign_id: int, organization_id: int) -
         return organization_opt
 
     context = {
+        ASSET: ASSET_URL,
         CURRENT_USER: req.user,
         CURRENT_CAMPAIGN: campaign_opt,
         CURRENT_ORGANIZATION: organization_opt,
@@ -110,6 +113,7 @@ def organizations_edit(req: HttpRequest, campaign_id: int, organization_id: int)
 
     if req.method == "GET":
         context = {
+            ASSET: ASSET_URL,
             CURRENT_USER: req.user,
             CURRENT_CAMPAIGN: campaign_opt,
             CURRENT_ORGANIZATION: organization_opt,

@@ -14,6 +14,7 @@ def characters(req: HttpRequest, campaign_id: int) -> HttpResponse:
         return campaign_opt
 
     context = {
+        ASSET: ASSET_URL,
         CURRENT_USER: req.user,
         CURRENT_CAMPAIGN: campaign_opt,
         CHARACTERS: Character.objects.filter(campaign=campaign_opt),
@@ -30,6 +31,7 @@ def characters_new(req: HttpRequest, campaign_id: int) -> HttpResponse:
 
     if req.method == "GET":
         context = {
+            ASSET: ASSET_URL,
             CURRENT_USER: req.user,
             CURRENT_CAMPAIGN: campaign_opt,
             CLASSES: dict(CLASSES),
@@ -54,6 +56,7 @@ def characters_id(req: HttpRequest, campaign_id: int, character_id: int) -> Http
         return character_opt
 
     context = {
+        ASSET: ASSET_URL,
         CURRENT_USER: req.user,
         CURRENT_CAMPAIGN: campaign_opt,
         CURRENT_CHARACTER: character_opt,
@@ -75,6 +78,7 @@ def characters_edit(req: HttpRequest, campaign_id: int, character_id: int) -> Ht
 
     if req.method == "GET":
         context = {
+            ASSET: ASSET_URL,
             CURRENT_USER: req.user,
             CURRENT_CAMPAIGN: campaign_opt,
             CURRENT_CHARACTER: character_opt,
