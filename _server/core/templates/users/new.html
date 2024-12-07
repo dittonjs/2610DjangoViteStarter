@@ -1,1 +1,30 @@
-This is the signup page!
+{% block content %}
+    <h1>New User</h1>
+    <form action="{{ url_for('users.create') }}" method="post">
+        {% csrf_token %}
+        <div>
+            <label>
+                First Name
+                <input type="text" name="first_name" required>
+            </label>
+        </div>
+        <div>
+            <label>
+                Last Name
+                <input type="text" name="last_name" required>
+            </label>
+        </div>
+        <div>
+            <label>
+                Username
+                <input type="text" name="username" required>
+            </label>
+        </div>
+        <div>
+            <label>
+                Password
+                <input type="password" name="password" required>
+            </label>
+        </div>
+        
+    </form>
