@@ -7,6 +7,7 @@ HOSTILITY = (
     ("N", "Neutral"),
     ("F", "Friendly"),
 )
+
 CLASSES = (
     (None, ""),
     ("A",  "Artificer"),

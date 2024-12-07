@@ -14,26 +14,6 @@ def users(req: HttpRequest) -> HttpResponse:
     return redirect(LOGIN_PAGE)
 
 
-# /users/login/
-def users_login(req: HttpRequest) -> HttpResponse:
-    if req.user.is_authenticated:
-        return redirect(f"/users/{req.user.id}/")
-    if req.method == "GET":
-        return render(req, "users/login.html")
-
-    # else it's POST, and it's a login request
-    username = req.POST.get("username")
-    password = req.POST.get("password")
-    if not (username and password):
-        return HttpResponseBadRequest("Missing username or password")
-
-    user = authenticate(req, username=username, password=password)
-    if user is None:
-        return HttpResponseBadRequest("Invalid username or password")
-    login(req, user)
-    return redirect("/campaigns/")
-
-
 # /users/new/
 def users_new(req: HttpRequest) -> HttpResponse:
     if req.user.is_authenticated:
@@ -64,12 +44,24 @@ def users_new(req: HttpRequest) -> HttpResponse:
     return redirect("/campaigns/")
 
 
-# /users/<int:user_id>/
-@login_required
-def users_id(req: HttpRequest, user_id: int) -> HttpResponse:
-    if req.user.id != user_id or not User.objects.filter(id=user_id).exists():
-        return HttpResponseForbidden("You do not have access to this page")
-    return render(req, "users/user.html", {CURRENT_USER: req.user})
+# /users/login/
+def users_login(req: HttpRequest) -> HttpResponse:
+    if req.user.is_authenticated:
+        return redirect(f"/users/{req.user.id}/")
+    if req.method == "GET":
+        return render(req, "users/login.html")
+
+    # else it's POST, and it's a login request
+    username = req.POST.get("username")
+    password = req.POST.get("password")
+    if not (username and password):
+        return HttpResponseBadRequest("Missing username or password")
+
+    user = authenticate(req, username=username, password=password)
+    if user is None:
+        return HttpResponseBadRequest("Invalid username or password")
+    login(req, user)
+    return redirect("/campaigns/")
 
 
 # /users/logout/
@@ -77,6 +69,14 @@ def users_id(req: HttpRequest, user_id: int) -> HttpResponse:
 def users_logout(req: HttpRequest) -> HttpResponse:
     logout(req)
     return redirect(HOME_PAGE)
+
+
+# /users/<int:user_id>/
+@login_required
+def users_id(req: HttpRequest, user_id: int) -> HttpResponse:
+    if req.user.id != user_id or not User.objects.filter(id=user_id).exists():
+        return HttpResponseForbidden("You do not have access to this page")
+    return render(req, "users/user.html", {CURRENT_USER: req.user})
 
 
 # /users/<int:user_id>/delete/

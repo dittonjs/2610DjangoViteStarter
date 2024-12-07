@@ -2,6 +2,7 @@ from django.urls import path
 from .views import views_characters, views_default, views_events, views_locations, views_notes, \
     views_organizations, views_users
 
+
 urlpatterns = [
     path('', view=views_default.index, name="index"),
     path('campaigns/', view=views_default.campaigns, name="campaigns"),
@@ -40,4 +41,11 @@ urlpatterns = [
     path('campaigns/<int:campaign_id>/notes/<int:note_id>/edit/', view=views_notes.notes_edit, name="notes_edit"),
     path('campaigns/<int:campaign_id>/notes/<int:note_id>/delete/', view=views_notes.notes_delete, name="notes_delete"),
     path('campaigns/<int:campaign_id>/notes/<int:note_id>/convert/', view=views_notes.notes_convert, name="notes_convert"),
+
+    path('users/', view=views_users.users, name="users"),
+    path('users/new/', view=views_users.users_new, name="users_new"),
+    path('users/login/', view=views_users.users_login, name="users_login"),
+    path('users/logout/', view=views_users.users_logout, name="users_logout"),
+    path('users/<int:user_id>/', view=views_users.users_id, name="users_id"),
+    path('users/<int:user_id>/delete/', view=views_users.users_delete, name="users_delete"),
 ]
