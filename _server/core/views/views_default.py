@@ -9,7 +9,7 @@ from .utils import *
 
 # / Welcome page
 def index(req: HttpRequest) -> HttpResponse:
-    return render(req, "core/index.html", {ASSET: ASSET_URL, CURRENT_USER: req.user})
+    return render(req, "core/index.html", {ASSET: ASSET_URL, CSS: CSS_FILE, CURRENT_USER: req.user})
 
 
 # /campaigns/
@@ -17,6 +17,7 @@ def index(req: HttpRequest) -> HttpResponse:
 def campaigns(req: HttpRequest) -> HttpResponse:
     context = {
         ASSET: ASSET_URL,
+        CSS: CSS_FILE,
         CURRENT_USER: req.user,
         CAMPAIGNS: Campaign.objects.filter(dm=req.user),
     }
@@ -29,6 +30,7 @@ def campaigns_new(req: HttpRequest) -> HttpResponse:
     if req.method == "GET":
         context = {
             ASSET: ASSET_URL,
+            CSS: CSS_FILE,
             CURRENT_USER: req.user,
             USERS: User.objects.all(),  # useful for adding users to approved users
         }
@@ -46,6 +48,7 @@ def campaigns_id(req: HttpRequest, campaign_id: int) -> HttpResponse:
 
     context = {
         ASSET: ASSET_URL,
+        CSS: CSS_FILE,
         CURRENT_USER: req.user,
         USER_IS_DM: req.user == campaign_opt.dm,
         CURRENT_CAMPAIGN: campaign_opt,
@@ -68,6 +71,7 @@ def campaigns_edit(req: HttpRequest, campaign_id: int) -> HttpResponse:
     if req.method == "GET":
         context = {
             ASSET: ASSET_URL,
+            CSS: CSS_FILE,
             CURRENT_USER: req.user,
             CURRENT_CAMPAIGN: campaign_opt,
             USERS: User.objects.all(),  # useful for adding users to approved users

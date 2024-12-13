@@ -15,6 +15,7 @@ def notes(req: HttpRequest, campaign_id: int) -> HttpResponse:
 
     context = {
         ASSET: ASSET_URL,
+        CSS: CSS_FILE,
         CURRENT_USER: req.user,
         CURRENT_CAMPAIGN: campaign_opt,
         NOTES: Note.objects.filter(campaign=campaign_opt),
@@ -32,6 +33,7 @@ def notes_new(req: HttpRequest, campaign_id: int) -> HttpResponse:
     if req.method == "GET":
         context = {
             ASSET: ASSET_URL,
+            CSS: CSS_FILE,
             CURRENT_USER: req.user,
             CURRENT_CAMPAIGN: campaign_opt,
             LOCATIONS: Location.objects.filter(campaign=campaign_opt),
@@ -55,6 +57,7 @@ def notes_id(req: HttpRequest, campaign_id: int, note_id: int) -> HttpResponse:
 
     context = {
         ASSET: ASSET_URL,
+        CSS: CSS_FILE,
         CURRENT_USER: req.user,
         CURRENT_CAMPAIGN: campaign_opt,
         CURRENT_NOTE: note_opt,
@@ -75,6 +78,7 @@ def notes_edit(req: HttpRequest, campaign_id: int, note_id: int) -> HttpResponse
     if req.method == "GET":
         context = {
             ASSET: ASSET_URL,
+            CSS: CSS_FILE,
             CURRENT_USER: req.user,
             CURRENT_CAMPAIGN: campaign_opt,
             CURRENT_NOTE: note_opt,
@@ -115,6 +119,7 @@ def notes_convert(req: HttpRequest, campaign_id: int, note_id: int) -> HttpRespo
         conversion_types = get_conversion_types(note_opt)
         context = {
             ASSET: ASSET_URL,
+            CSS: CSS_FILE,
             CURRENT_USER: req.user,
             CURRENT_CAMPAIGN: campaign_opt,
             CURRENT_NOTE: note_opt,
