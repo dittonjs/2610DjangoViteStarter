@@ -42,6 +42,9 @@ def campaigns_new(request):
         is_public = request.POST.get('is_public') == 'on'
         approved_users = request.POST.getlist('approved_users')  # Replace with actual field handling logic
 
+        # Debugging line
+        print(f"Name: {name}, Description: {description}, Is Public: {is_public}, Approved Users: {approved_users}")
+
         # Creating the campaign
         campaign = Campaign.objects.create(
             name=name,
@@ -55,4 +58,5 @@ def campaigns_new(request):
 
         return redirect('/campaigns/')  # Redirect to the desired page after saving
 
-    return render(request, 'campaigns/new_campaign.html')
+    # In the future we should add a played with or friends feature, this is a safety risk if it wasn't just a small project for friends
+    return render(request, 'campaigns/new_campaign.html', {'all_users': all_users})
