@@ -59,7 +59,6 @@ def locations_id(req: HttpRequest, campaign_id: int, location_id: int) -> HttpRe
         CURRENT_USER: req.user,
         CURRENT_CAMPAIGN: campaign_opt,
         CURRENT_LOCATION: location_opt,
-        LOCATIONS: Location.objects.filter(campaign=campaign_opt),  # Related locations
         ORGANIZATIONS: Organization.objects.filter(location=location_opt),
         CHARACTERS: Character.objects.filter(from_location=location_opt),
         EVENTS: Event.objects.filter(location=location_opt),

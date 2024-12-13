@@ -1,1 +1,54 @@
-This page allows a user to edit an existing Location
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Campaign Manager - Home</title>
+    <link rel="stylesheet" href="/static/{{css_file}}" />
+    <script type="module" src="/static/{{js_file}}"></script>
+</head>
+<body>
+    <div id="header">
+        <a id="back-to-home" href="/campaigns/">
+            <h2>Campaign Manager</h2>
+        </a>
+        <div id="user-actions">
+            <a href="/campaigns/">My Campaigns</a>
+            <a href="/users/logout/">Sign Out</a>
+        </div>
+    </div>
+    <h1>Add Location</h1>
+    <form id="new-event" action="" method="post">
+        <label>
+            Name
+            <input type="text" name="title" id="location-name" value="{{current_location.name}}" required />
+        </label>
+        <label>
+            Hostility
+            <select name="hostility" id="location-hostility" required>
+                <option value="F" {% if current_location.hostility == 'F' %}selected{% endif %}>Friendly</option>
+                <option value="N" {% if current_location.hostility == 'N' %}selected{% endif %}>Neutral</option>
+                <option value="H" {% if current_location.hostility == 'H' %}selected{% endif %}>Hostile</option>
+            </select>
+        </label>
+        <label>
+            Neighboring Locations
+            {% if locations %}
+                <select name="neighboring_locations" id="location-neighbors" multiple>
+                    {% for location in locations %}
+                        {% if location != current_location %}
+                            <option value="{{location.id}}" {% if location in current_location.neighboring_locations %}selected{% endif %}>{{location.name}}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+            {% else %}
+                <em>No other locations have been added to this campaign.</em>
+            {% endif %}
+        </label>
+        <label>
+            Description
+            <textarea name="description" id="location-description">{{current_location.description}}</textarea>
+        </label>
+        <button>Save and Return</button>
+    </form>
+</body>
+</html>

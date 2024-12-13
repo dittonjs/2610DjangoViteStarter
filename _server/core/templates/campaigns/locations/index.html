@@ -1,1 +1,44 @@
-This page will list all Locations for a Campaign
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Campaign Manager - Home</title>
+    <link rel="stylesheet" href="/static/{{css_file}}" />
+    <script type="module" src="/static/{{js_file}}"></script>
+</head>
+<body>
+    <div id="header">
+        <a id="back-to-home" href="/campaigns/">
+            <h2>Campaign Manager</h2>
+        </a>
+        <div id="user-actions">
+            <a href="/campaigns/">My Campaigns</a>
+            <a href="/users/logout/">Sign Out</a>
+        </div>
+    </div>
+    <h1>Locations in {{current_campaign.name}}</h1>
+    <a class="new-button" href="new/">Add Location</a>
+    {% if locations %}
+        {% for location in locations %}
+            <div class="info-card location-card">
+                <h3><a href="{{location.id}}/">{{location.name}}</a></h3>
+                <p>{{{"F": "Friendly", "N": "Neutral", "H": "Hostile"}[location.hostility]}}</p>
+                <p>{{location.description}}</p>
+                <p>Neighboring Locations:
+                    {% if location.neighboring_locations %}
+                        <ul>
+                            {% for neighbor in location.neighboring_locations %}
+                                <li><a href="/campaigns/{{current_campaign.id}}/locations/{{neighbor.id}}/">{{neighbor.name}}</a></li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        None added
+                    {% endif %}
+                </p>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>No locations have been added to this campaign.</p>
+    {% endif %}
+</body>
+</html>
