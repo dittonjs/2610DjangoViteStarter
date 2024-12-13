@@ -38,37 +38,6 @@ def campaigns_new(req: HttpRequest) -> HttpResponse:
     # else it's POST, and it's a new campaign request
     return campaign_form(req)
 
-### My version, see if it makes sense to you ###
-
-def campaigns_new(request):
-    if request.method == 'POST':
-        # Get the form data
-        name = request.POST.get('name')
-        description = request.POST.get('description')
-        is_public = request.POST.get('is_public') == 'on'
-        approved_users = request.POST.getlist('approved_users')  # Replace with actual field handling logic
-
-        # Debugging line
-        print(f"Name: {name}, Description: {description}, Is Public: {is_public}, Approved Users: {approved_users}")
-
-        # Creating the campaign
-        campaign = Campaign.objects.create(
-            name=name,
-            description=description,
-            is_public=is_public,
-        )
-
-        # Update the Many-to-Many field, the issue is you were trying to directly update it but we need this to do it for us
-        if approved_users:  # Ensure you have a valid list, if publice we can default to all
-            campaign.approved_users.set(approved_users)
-
-        return redirect('/campaigns/')  # Redirect to the desired page after saving
-     
-    # In the future we should add a played with or friends feature, this is a safety risk if it wasn't just a small project for friends
-    return render(request, 'campaigns/new_campaign.html', {'all_users': all_users})
-
-### It has a debug statement currently ###
-
 
 # /campaigns/<int:campaign_id>/
 @login_required

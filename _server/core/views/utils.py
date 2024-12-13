@@ -95,10 +95,9 @@ def campaign_form(req: HttpRequest, campaign: Campaign | None=None) -> HttpRespo
         campaign.name = name
         campaign.description = description
         campaign.is_public = is_public
-        campaign.approved_users.set(approved_users)
     else:
-        campaign = Campaign(dm=req.user, name=name, description=description, is_public=is_public,
-                            approved_users=approved_users)
+        campaign = Campaign(dm=req.user, name=name, description=description, is_public=is_public)
+    campaign.approved_users.set(approved_users)
     campaign.save()
     return redirect(f"/campaigns/{campaign.id}/")
 
