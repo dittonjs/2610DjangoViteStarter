@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Campaign Manager - Home</title>
+    <link rel="stylesheet" href="/static/{{css_file}}" />
+    <script type="module" src="/static/{{js_file}}"></script>
+</head>
+<body>
+    <div id="header">
+        <a id="back-to-home" href="/campaigns/">
+            <h2>Campaign Manager</h2>
+        </a>
+        <div id="user-actions">
+            <a href="/campaigns/">My Campaigns</a>
+            <a href="/users/logout/">Sign Out</a>
+        </div>
+    </div>
+    <h1>{{current_campaign.name}}</h1>
+    <em>{% if current_campaign.is_public %}Public{% else %}Private{% endif %} Campaign</em>
+    <div id="campaign-actions" class="note-actions">
+        <a class="edit-button" href="/campaigns/{{current_campaign.id}}/edit/">Edit</a>
+        <a class="delete-button" href="/campaigns/{{current_campaign.id}}/delete/">Delete</a>
+    </div>
+    <p>{{current_campaign.description}}</p>
+    <div class="campaign-items">
+        <div class="item-header">
+            <h2>Locations</h2>
+            <a class="new-button" href="locations/new/">Add</a>
+        </div>
+        {% if locations %}
+            {% for location in locations %}
+                <div class="info-card location-card">
+                    <h3>{{location.name}}</h3>
+                    <em>
+                        {% if location.hostility == 'H' %}
+                            Hostile
+                        {% elif location.hostility == 'N' %}
+                            Neutral
+                        {% elif location.hostility == 'F' %}
+                            Friendly
+                        {% endif %}
+                    </em>
+                    <p>{{location.description}}</p>
+                    <a href="locations/{{location.id}}/">View</a>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No locations have been added to this campaign.</p>
+        {% endif %}
+    </div>
+    <div class="campaign-items">
+        <div class="item-header">
+            <h2>Organizations</h2>
+            <a class="new-button" href="organizations/new/">Add</a>
+        </div>
+        {% if organizations %}
+            {% for organization in organizations %}
+                <div class="info-card organization-card">
+                    <h3>{{organization.name}}</h3>
+                    <em>
+                        {% if organization.hostility == 'H' %}
+                            Hostile
+                        {% elif organization.hostility == 'N' %}
+                            Neutral
+                        {% elif organization.hostility == 'F' %}
+                            Friendly
+                        {% endif %}
+                    </em>
+                    {% if organization.location %}
+                        <p>Located in {{organization.location.name}}</p>
+                    {% endif %}
+                    <p>{{organization.description}}</p>
+                    <a href="organizations/{{organization.id}}/">View</a>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No organizations have been added to this campaign.</p>
+        {% endif %}
+    </div>
+    <div class="campaign-items">
+        <div class="item-header">
+            <h2>Characters</h2>
+            <a class="new-button" href="characters/new/">Add</a>
+        </div>
+        {% if characters %}
+            {% for character in characters %}
+                <div class="info-card character-card">
+                    <h3>{{character.name}}</h3>
+                    <em>
+                        {% if character.hostility %}
+                            {% if character.hostility == 'H' %}
+                                Hostile NPC
+                            {% elif character.hostility == 'N' %}
+                                Neutral NPC
+                            {% elif character.hostility == 'F' %}
+                                Friendly NPC
+                            {% endif %}
+                        {% elif character.player %}
+                            {{character.player.username}}'s Character
+                        {% endif %}
+                    </em>
+                    <p>{% if character.level %}Level {{character.level}} {% endif %}{{character.race}}{% if character.clazz %} {{character.clazz}}{% endif %}</p>
+                    {% if character.location %}
+                        <p>From {{character.location.name}}</p>
+                    {% endif %}
+                    {% if character.organizations %}
+                        <p>Member of:<br>
+                            {% for organization in character.organizations %}
+                                {{organization.name}}<br>
+                            {% endfor %}
+                        </p>
+                    {% endif %}
+                    <p>{{character.description}}</p>
+                    <a href="characters/{{character.id}}/">View</a>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No characters have been added to this campaign.</p>
+        {% endif %}
+    </div>
+    <div class="campaign-items">
+        <div class="item-header">
+            <h2>Events</h2>
+            <a class="new-button" href="events/new/">Add</a>
+        </div>
+        {% if events %}
+            {% for event in events %}
+                <div class="info-card event-card">
+                    <h3>{{event.title}}</h3>
+                    <em>{{event.start_time}}{% if event.end_time %} - {{event.end_time}}{% endif %}</em>
+                    {% if event.location %}
+                        <p>At {{event.location.name}}</p>
+                    {% endif %}
+                    <p>{{event.description}}</p>
+                    <a href="events/{{event.id}}/">View</a>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No items have been added to this campaign.</p>
+        {% endif %}
+    </div>
+    {% if notes %}
+        <div class="campaign-items">
+            <div class="item-header">
+                <h2>Notes</h2>
+                <a class="new-button" href="notes/new/">Add</a>
+            </div>
+            {% for note in notes %}
+                <div class="info-card note-card">
+                    <h3>{{note.title}}</h3>
+                    <em>{{note.created_at}}</em>
+                    <p>{{note.content}}</p>
+                    <a href="notes/{{note.id}}/">View</a>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+</body>
+</html>

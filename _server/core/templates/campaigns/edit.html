@@ -1,1 +1,40 @@
-This page is where a user (DM only) can edit a campaign
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Campaign Manager - Home</title>
+    <link rel="stylesheet" href="/static/{{css_file}}" />
+    <script type="module" src="/static/{{js_file}}"></script>
+</head>
+<body>
+    <div id="header">
+        <a id="back-to-home" href="/campaigns/">
+            <h2>Campaign Manager</h2>
+        </a>
+        <div id="user-actions">
+            <a href="/campaigns/">My Campaigns</a>
+            <a href="/users/logout/">Sign Out</a>
+        </div>
+    </div>
+    <h1>Edit Campaign</h1>
+    <form id="edit-campaign" action="" method="post">
+        <label>
+            Campaign Name
+            <input type="text" name="name" id="campaign-name" value="{{current_campaign.name}}" required />
+        </label>
+        <label>
+            Description
+            <textarea name="description" id="campaign-description" value="{{current_campaign.description}}"></textarea>
+        </label>
+        <label>
+            <input type="checkbox" name="is_public" id="campaign-public" {% if current_campaign.is_public %}checked{% endif %} />
+            Set Public
+        </label>
+        <label>
+            Shared Users
+            <em>This feature is not available at this time.</em>
+        </label>
+        <button>Save and Return</button>
+    </form>
+</body>
+</html>

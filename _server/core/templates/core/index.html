@@ -1,25 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Vite + Django</title>
-  {% if debug %}
-    <script type="module">
-      import RefreshRuntime from '{{asset_url}}/static/@react-refresh'
-      RefreshRuntime.injectIntoGlobalHook(window)
-      window.$RefreshReg$ = () => {}
-      window.$RefreshSig$ = () => (type) => type
-      window.__vite_plugin_react_preamble_installed__ = true
-    </script>
-    <script type="module" src="{{asset_url}}/static/@vite/client"></script>
-    <script type="module" src="{{asset_url}}/static/src/main.jsx"></script>
-  {% else %}
+    <meta charset="UTF-8">
+    <title>Campaign Manager - Home</title>
     <link rel="stylesheet" href="/static/{{css_file}}" />
     <script type="module" src="/static/{{js_file}}"></script>
-  {% endif %}
 </head>
 <body>
-  <div id="root"></div>
+    <div id="header">
+        <a id="back-to-home" href="/campaigns/">
+            <h2>Campaign Manager</h2>
+        </a>
+        <div id="user-actions">
+            {% if user.is_authenticated %}
+                <a href="/campaigns/">My Campaigns</a>
+                <a href="/users/logout/">Sign Out</a>
+            {% else %}
+                <a href="/users/login/">Sign In</a>
+                <a href="/users/new/">Create Account</a>
+            {% endif %}
+        </div>
+    </div>
+    <h1>Campaign Manager</h1>
+    <div id="site-description">
+        <p>Welcome to the campaign manager!</p>
+        <p>Here you can create, edit, and delete campaigns.</p>
+    </div>
+    {% if public_campaigns %}
+        {% for campaign in public_campaigns %}
+            <div class="info-card campaign-card">
+                <h3>{{campaign.name}}</h3>
+                <p>{{campaign.description}}</p>
+                <p>DM: {{campaign.dm.username}}</p>
+                <a href="/campaigns/{{campaign.id}}">View</a>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>No publicly-shared campaigns could be found at this time.</p>
+    {% endif %}
 </body>
 </html>

@@ -1,30 +1,40 @@
-{% block content %}
-    <h1>New User</h1>
-    <form action="{{ url_for('users.create') }}" method="post">
-        {% csrf_token %}
-        <div>
-            <label>
-                First Name
-                <input type="text" name="first_name" required>
-            </label>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Campaign Manager - Home</title>
+    <link rel="stylesheet" href="/static/{{css_file}}" />
+    <script type="module" src="/static/{{js_file}}"></script>
+</head>
+<body>
+    <div id="header">
+        <a id="back-to-home" href="/campaigns/">
+            <h2>Campaign Manager</h2>
+        </a>
+        <div id="user-actions">
+            <a href="/users/login/">Sign In</a>
+            <a href="/users/new/">Create Account</a>
         </div>
-        <div>
-            <label>
-                Last Name
-                <input type="text" name="last_name" required>
-            </label>
-        </div>
-        <div>
-            <label>
-                Username
-                <input type="text" name="username" required>
-            </label>
-        </div>
-        <div>
-            <label>
-                Password
-                <input type="password" name="password" required>
-            </label>
-        </div>
-        
+    </div>
+    <h1>Create User</h1>
+    <form id="new-user" action="" method="post">
+        <label>
+            First Name
+            <input type="text" name="first_name" id="user-first-name" required />
+        </label>
+        <label>
+            Last Name
+            <input type="text" name="last_name" id="user-last-name" required />
+        </label>
+        <label>
+            Username
+            <input type="text" name="username" id="user-username" required />
+        </label>
+        <label>
+            Password
+            <input type="password" name="password" id="user-password" required />
+        </label>
+        <button>Create Account</button>
     </form>
+</body>
+</html>

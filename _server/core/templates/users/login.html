@@ -1,1 +1,31 @@
-This is the login page!
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Campaign Manager - Home</title>
+    <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+    <div id="header">
+        <a id="back-to-home" href="/campaigns/">
+            <h2>Campaign Manager</h2>
+        </a>
+        <div id="user-actions">
+            <a href="/users/login/">Sign In</a>
+            <a href="/users/new/">Create Account</a>
+        </div>
+    </div>
+    <h1>Sign In to Your Account</h1>
+    <form id="login" action="" method="post">
+        <label>
+            Username
+            <input type="text" name="username" id="user-username" required />
+        </label>
+        <label>
+            Password
+            <input type="password" name="password" id="user-password" required />
+        </label>
+        <button>Sign In</button>
+    </form>
+</body>
+</html>
