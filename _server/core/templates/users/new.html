@@ -1,30 +1,46 @@
-{% block content %}
-    <h1>New User</h1>
-    <form action="{{ url_for('users.create') }}" method="post">
-        {% csrf_token %}
-        <div>
-            <label>
-                First Name
-                <input type="text" name="first_name" required>
-            </label>
-        </div>
-        <div>
-            <label>
-                Last Name
-                <input type="text" name="last_name" required>
-            </label>
-        </div>
-        <div>
-            <label>
-                Username
-                <input type="text" name="username" required>
-            </label>
-        </div>
-        <div>
-            <label>
-                Password
-                <input type="password" name="password" required>
-            </label>
-        </div>
-        
-    </form>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campaign Manager - Create User</title>
+    <link rel="stylesheet" href="/static/{{ css_file }}" />
+    <script type="module" src="/static/{{ js_file }}"></script>
+</head>
+<body>
+    <header id="header">
+        <a id="back-to-home" href="/campaigns/">
+            <h2>Campaign Manager</h2>
+        </a>
+        <nav id="user-actions">
+            <a href="/users/login/">Sign In</a>
+            <a href="/users/new/">Create Account</a>
+        </nav>
+    </header>
+    <main>
+        <h1>Create User</h1>
+        <form id="new-user-form" action="" method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="user-first-name">First Name</label>
+                <input type="text" name="first_name" id="user-first-name" required />
+            </div>
+            <div class="form-group">
+                <label for="user-last-name">Last Name</label>
+                <input type="text" name="last_name" id="user-last-name" required />
+            </div>
+            <div class="form-group">
+                <label for="user-username">Username</label>
+                <input type="text" name="username" id="user-username" required />
+            </div>
+            <div class="form-group">
+                <label for="user-password">Password</label>
+                <input type="password" name="password" id="user-password" required />
+            </div>
+            <div class="form-actions">
+                <button type="submit">Create Account</button>
+            </div>
+        </form>
+    </main>
+</body>
+</html>
