@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Campaign Manager - Home</title>
+    <link rel="stylesheet" href="/static/{{css_file}}" />
+    <script type="module" src="/static/{{js_file}}"></script>
+</head>
+<body>
+    <div id="header">
+        <a id="back-to-home" href="/campaigns/">
+            <h2>Campaign Manager</h2>
+        </a>
+        <div id="user-actions">
+            <a href="/campaigns/">My Campaigns</a>
+            <a href="/users/logout/">Sign Out</a>
+        </div>
+    </div>
+    <h1>Create Note</h1>
+    <form id="new-note" action="" method="post">
+        <label>
+            Name
+            <input type="text" name="title" id="note-title" required />
+        </label>
+        <label>
+            Content
+            <textarea name="content" id="note-content"></textarea>
+        </label>
+        <label>
+            Start Time
+            <input type="datetime-local" name="start_time" id="note-start-time" />
+        </label>
+        <label>
+            End Time
+            <input type="datetime-local" name="end_time" id="note-end-time" />
+        </label>
+        <label>
+            Race
+            <input type="text" name="race" id="note-race" />
+        </label>
+        <label>
+            Class
+            <input type="text" name="clazz" id="note-class" />
+        </label>
+        <label>
+            Level
+            <input type="number" name="level" id="note-level" />
+        </label>
+        <label>
+            Hostility
+            <select name="hostility" id="note-hostility">
+                <option value="F">Friendly</option>
+                <option value="N">Neutral</option>
+                <option value="H">Hostile</option>
+            </select>
+        </label>
+        <label>
+            Locations
+            {% if locations %}
+                <select name="locations" id="note-locations" multiple>
+                    {% for location in locations %}
+                        <option value="{{location.id}}">{{location.name}}</option>
+                    {% endfor %}
+                </select>
+            {% else %}
+                <em>No other locations have been added to this campaign.</em>
+            {% endif %}
+        </label>
+        <label>
+            Organizations
+            {% if organizations %}
+                <select name="organizations" id="note-organizations" multiple>
+                    {% for organization in organizations %}
+                        <option value="{{organization.id}}">{{organization.name}}</option>
+                    {% endfor %}
+                </select>
+            {% else %}
+                <em>No organizations have been added to this campaign.</em>
+            {% endif %}
+        </label>
+        <label>
+            Characters
+            {% if characters %}
+                <select name="characters" id="note-characters" multiple>
+                    {% for character in characters %}
+                        <option value="{{character.id}}">{{character.name}}</option>
+                    {% endfor %}
+                </select>
+            {% else %}
+                <em>No characters have been added to this campaign.</em>
+            {% endif %}
+        </label>
+        <button>Save and Return</button>
+    </form>
+</body>
+</html>
