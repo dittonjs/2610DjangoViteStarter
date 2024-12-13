@@ -31,8 +31,19 @@
             Set Public
         </label>
         <label>
-            Shared Users
-            <em>This feature is not available at this time.</em>
+            <label for="approved-users">Shared Users</label>
+                {% if users %}
+                    <select name="approved_users" id="approved-users" multiple>
+                        {% for user in users %}
+                            {% if user != current_user %}
+                                <option value="{{ user.id }}" {% if user in current_campaign.approved_users %}selected{% endif %}>{{ user.username }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                    <p class="form-note">Hold Ctrl (Windows) or Cmd (Mac) to select multiple users.</p>
+                {% else %}
+                    <p class="form-note">No other users could be found.</p>
+                {% endif %}
         </label>
         <button>Save and Return</button>
     </form>
