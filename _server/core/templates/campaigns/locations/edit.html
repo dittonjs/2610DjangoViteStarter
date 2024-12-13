@@ -35,9 +35,7 @@
             {% if locations %}
                 <select name="neighboring_locations" id="location-neighbors" multiple>
                     {% for location in locations %}
-                        {% if location != current_location %}
-                            <option value="{{location.id}}" {% if location in current_location.neighboring_locations %}selected{% endif %}>{{location.name}}</option>
-                        {% endif %}
+                        <option value="{{location.id}}" {% if location in current_location.neighboring_locations %}selected{% endif %}>{{location.name}}</option>
                     {% endfor %}
                 </select>
             {% else %}

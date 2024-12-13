@@ -51,9 +51,7 @@
             {% if organizations %}
                 <select name="related_organizations" id="organization-related" multiple>
                     {% for organization in organizations %}
-                        {% if organization != current_organization %}
-                            <option value="{{organization.id}}" {% if organization in current_organization.related_organizations %}selected{% endif %}>{{organization.name}}</option>
-                        {% endif %}
+                        <option value="{{organization.id}}" {% if organization in current_organization.related_organizations %}selected{% endif %}>{{organization.name}}</option>
                     {% endfor %}
                 </select>
             {% else %}
