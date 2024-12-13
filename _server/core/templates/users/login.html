@@ -2,31 +2,36 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Campaign Manager - Home</title>
-    <link rel="stylesheet" href="/static/{{css_file}}" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campaign Manager - Sign In</title>
+    <link rel="stylesheet" href="/static/style.css" />
 </head>
 <body>
-    <div id="header">
+    <header id="header">
         <a id="back-to-home" href="/campaigns/">
             <h2>Campaign Manager</h2>
         </a>
-        <div id="user-actions">
+        <nav id="user-actions">
             <a href="/users/login/">Sign In</a>
             <a href="/users/new/">Create Account</a>
-        </div>
-    </div>
-    <h1>Sign In to Your Account</h1>
-    <form id="login" action="" method="post">
-        {% csrf_token %}
-        <label>
-            Username
-            <input type="text" name="username" id="user-username" required />
-        </label>
-        <label>
-            Password
-            <input type="password" name="password" id="user-password" required />
-        </label>
-        <button>Sign In</button>
-    </form>
+        </nav>
+    </header>
+    <main>
+        <h1>Sign In to Your Account</h1>
+        <form id="login-form" action="" method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="user-username">Username</label>
+                <input type="text" name="username" id="user-username" required />
+            </div>
+            <div class="form-group">
+                <label for="user-password">Password</label>
+                <input type="password" name="password" id="user-password" required />
+            </div>
+            <div class="form-actions">
+                <button type="submit">Sign In</button>
+            </div>
+        </form>
+    </main>
 </body>
 </html>

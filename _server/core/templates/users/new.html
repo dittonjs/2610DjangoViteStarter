@@ -2,39 +2,45 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Campaign Manager - Home</title>
-    <link rel="stylesheet" href="/static/{{css_file}}" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campaign Manager - Create User</title>
+    <link rel="stylesheet" href="/static/{{ css_file }}" />
+    <script type="module" src="/static/{{ js_file }}"></script>
 </head>
 <body>
-    <div id="header">
+    <header id="header">
         <a id="back-to-home" href="/campaigns/">
             <h2>Campaign Manager</h2>
         </a>
-        <div id="user-actions">
+        <nav id="user-actions">
             <a href="/users/login/">Sign In</a>
             <a href="/users/new/">Create Account</a>
-        </div>
-    </div>
-    <h1>Create User</h1>
-    <form id="new-user" action="" method="post">
-        {% csrf_token %}
-        <label>
-            First Name
-            <input type="text" name="first_name" id="user-first-name" required />
-        </label>
-        <label>
-            Last Name
-            <input type="text" name="last_name" id="user-last-name" required />
-        </label>
-        <label>
-            Username
-            <input type="text" name="username" id="user-username" required />
-        </label>
-        <label>
-            Password
-            <input type="password" name="password" id="user-password" required />
-        </label>
-        <button>Create Account</button>
-    </form>
+        </nav>
+    </header>
+    <main>
+        <h1>Create User</h1>
+        <form id="new-user-form" action="" method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="user-first-name">First Name</label>
+                <input type="text" name="first_name" id="user-first-name" required />
+            </div>
+            <div class="form-group">
+                <label for="user-last-name">Last Name</label>
+                <input type="text" name="last_name" id="user-last-name" required />
+            </div>
+            <div class="form-group">
+                <label for="user-username">Username</label>
+                <input type="text" name="username" id="user-username" required />
+            </div>
+            <div class="form-group">
+                <label for="user-password">Password</label>
+                <input type="password" name="password" id="user-password" required />
+            </div>
+            <div class="form-actions">
+                <button type="submit">Create Account</button>
+            </div>
+        </form>
+    </main>
 </body>
 </html>
