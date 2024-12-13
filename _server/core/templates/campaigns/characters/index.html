@@ -17,6 +17,7 @@
         </div>
     </div>
     <h1>Characters in {{current_campaign.name}}</h1>
+    <a class="new-button" href="new/">New Character</a>
     {% if characters %}
         {% for character in characters %}
             <div class="info-card character-card">
@@ -57,3 +58,5 @@
     {% else %}
         <p>No characters have been added to this campaign.</p>
     {% endif %}
+</body>
+</html>
