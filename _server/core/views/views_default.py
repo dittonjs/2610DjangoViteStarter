@@ -32,7 +32,8 @@ def campaigns_new(req: HttpRequest) -> HttpResponse:
             ASSET: ASSET_URL,
             CSS: CSS_FILE,
             CURRENT_USER: req.user,
-            USERS: User.objects.all(),  # useful for adding users to approved users
+            # Normally, the user would input a username manually, or use a Friends list
+            USERS: User.objects.exclude(id=req.user.id),  # useful for adding users to approved users
         }
         return render(req, "campaigns/new.html", context)
     # else it's POST, and it's a new campaign request
@@ -104,7 +105,7 @@ def campaigns_edit(req: HttpRequest, campaign_id: int) -> HttpResponse:
             CSS: CSS_FILE,
             CURRENT_USER: req.user,
             CURRENT_CAMPAIGN: campaign_opt,
-            USERS: User.objects.all(),  # useful for adding users to approved users
+            USERS: User.objects.exclude(id=req.user.id),  # useful for adding users to approved users
         }
         return render(req, "campaigns/edit.html", context)
     # else it's POST, and it's an edit campaign request

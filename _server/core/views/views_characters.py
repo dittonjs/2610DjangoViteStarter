@@ -85,7 +85,8 @@ def characters_edit(req: HttpRequest, campaign_id: int, character_id: int) -> Ht
             CLASSES: dict(CLASSES),
             LOCATIONS: Location.objects.filter(campaign=campaign_opt),
             ORGANIZATIONS: Organization.objects.filter(campaign=campaign_opt),
-            CHARACTERS: Character.objects.filter(campaign=campaign_opt),
+            CHARACTERS: Character.objects.filter(campaign=campaign_opt)\
+                                         .exclude(id=character_opt.id),
             USERS: User.objects.all(),
         }
         return render(req, "campaigns/characters/edit.html", context)

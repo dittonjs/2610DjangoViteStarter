@@ -95,10 +95,9 @@ def campaign_form(req: HttpRequest, campaign: Campaign | None=None) -> HttpRespo
         campaign.name = name
         campaign.description = description
         campaign.is_public = is_public
-        campaign.approved_users.set(approved_users)
     else:
-        campaign = Campaign(dm=req.user, name=name, description=description, is_public=is_public,
-                            approved_users=approved_users)
+        campaign = Campaign(dm=req.user, name=name, description=description, is_public=is_public)
+    campaign.approved_users.set(approved_users)
     campaign.save()
     return redirect(f"/campaigns/{campaign.id}/")
 
@@ -131,11 +130,10 @@ def location_form(req: HttpRequest, campaign: Campaign, location: Location | Non
         location.name = name
         location.description = description
         location.hostility = hostility
-        location.neighboring_locations.set(neighboring_locations)
     else:
-        location = Location(campaign=campaign, name=name,
-                            neighboring_locations=neighboring_locations, description=description,
+        location = Location(campaign=campaign, name=name, description=description,
                             hostility=hostility)
+    location.neighboring_locations.set(neighboring_locations)
     location.save()
     return redirect(f"/campaigns/{campaign.id}/locations/{location.id}/")
 
@@ -198,8 +196,6 @@ def character_form(req: HttpRequest, campaign: Campaign, character: Character | 
         character.clazz = clazz
         character.level = level
         character.from_location = location_opt
-        character.organizations.set(organizations)
-        character.related_characters.set(characters)
         character.description = description
         if isinstance(character, PlayerCharacter):
             pc_id = req.POST.get("pc")
@@ -233,7 +229,6 @@ def character_form(req: HttpRequest, campaign: Campaign, character: Character | 
                     return pc_opt
             character = PlayerCharacter(campaign=campaign, name=name, race=race, clazz=clazz,
                                         level=level, from_location=location_opt,
-                                        organizations=organizations, related_characters=characters,
                                         description=description, player=pc_opt)
         else:  # NPC
             hostility = req.POST.get("hostility")
@@ -241,9 +236,9 @@ def character_form(req: HttpRequest, campaign: Campaign, character: Character | 
                 return HttpResponseBadRequest("Invalid hostility level")
             character = NonPlayerCharacter(campaign=campaign, name=name, race=race, clazz=clazz,
                                            level=level, from_location=location_opt,
-                                           organizations=organizations,
-                                           related_characters=characters, description=description,
-                                           hostility=hostility)
+                                           description=description, hostility=hostility)
+    character.organizations.set(organizations)
+    character.related_characters.set(characters)
     character.save()
     return redirect(f"/campaigns/{campaign.id}/characters/{character.id}/")
 
@@ -306,13 +301,12 @@ def event_form(req: HttpRequest, campaign: Campaign, event: Event | None=None) -
         event.start_time = start_time
         event.end_time = end_time
         event.location = location_opt
-        event.involved_organizations.set(organizations)
-        event.involved_characters.set(characters)
         event.description = description
     else:
         event = Event(campaign=campaign, title=title, start_time=start_time, end_time=end_time,
-                      location=location_opt, involved_organizations=organizations,
-                      involved_characters=characters, description=description)
+                      location=location_opt, description=description)
+    event.involved_organizations.set(organizations)
+    event.involved_characters.set(characters)
     event.save()
     return redirect(f"/campaigns/{campaign.id}/events/{event.id}/")
 
@@ -397,14 +391,13 @@ def note_form(req: HttpRequest, campaign: Campaign, note: Note | None=None) -> H
         note.clazz = clazz
         note.level = level
         note.hostility = hostility
-        note.locations.set(locations)
-        note.organizations.set(organizations)
-        note.characters.set(characters)
         note.content = content
     else:
         note = Note(campaign=campaign, title=title, start_time=start_time, end_time=end_time,
-                    race=race, clazz=clazz, level=level, hostility=hostility, locations=locations,
-                    organizations=organizations, characters=characters, content=content)
+                    race=race, clazz=clazz, level=level, hostility=hostility, content=content)
+    note.locations.set(locations)
+    note.organizations.set(organizations)
+    note.characters.set(characters)
     note.save()
     return redirect(f"/campaigns/{campaign.id}/notes/{note.id}/")
 

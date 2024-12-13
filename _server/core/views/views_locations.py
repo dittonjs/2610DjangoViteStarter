@@ -84,7 +84,7 @@ def locations_edit(req: HttpRequest, campaign_id: int, location_id: int) -> Http
             CURRENT_USER: req.user,
             CURRENT_CAMPAIGN: campaign_opt,
             CURRENT_LOCATION: location_opt,
-            LOCATIONS: Location.objects.filter(campaign=campaign_opt),
+            LOCATIONS: Location.objects.filter(campaign=campaign_opt).exclude(id=location_opt.id),
         }
         return render(req, "campaigns/locations/edit.html", context)
     # else it's POST, and it's an edit location request

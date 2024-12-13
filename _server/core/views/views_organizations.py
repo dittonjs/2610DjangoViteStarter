@@ -122,7 +122,8 @@ def organizations_edit(req: HttpRequest, campaign_id: int, organization_id: int)
             CURRENT_CAMPAIGN: campaign_opt,
             CURRENT_ORGANIZATION: organization_opt,
             LOCATIONS: Location.objects.filter(campaign=campaign_opt),
-            ORGANIZATIONS: Organization.objects.filter(campaign=campaign_opt),
+            ORGANIZATIONS: Organization.objects.filter(campaign=campaign_opt)\
+                                               .exclude(id=organization_opt.id),
         }
         return render(req, "campaigns/organizations/edit.html", context)
 
