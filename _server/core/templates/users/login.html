@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Campaign Manager - Home</title>
-    <link rel="stylesheet" href="/static/style.css" />
+    <link rel="stylesheet" href="/static/{{css_file}}" />
 </head>
 <body>
     <div id="header">
@@ -17,6 +17,7 @@
     </div>
     <h1>Sign In to Your Account</h1>
     <form id="login" action="" method="post">
+        {% csrf_token %}
         <label>
             Username
             <input type="text" name="username" id="user-username" required />

@@ -16,6 +16,8 @@ TIME_FORMAT = "%Y-%m-%dT%H:%M"
 
 # Context keys
 ASSET                = "asset_url"
+CSS                  = "css_file"
+CSS_FILE             = "style.css"
 CURRENT_USER         = "current_user"
 USERS                = "users"
 USER_IS_DM           = "is_dm"
