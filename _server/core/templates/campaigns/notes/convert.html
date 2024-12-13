@@ -1,2 +1,37 @@
-This page will be used to render the Note conversion form.
-Context will be provided as to the types of model this Note can be converted into.
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Campaign Manager - Home</title>
+    <link rel="stylesheet" href="/static/{{css_file}}" />
+    <script type="module" src="/static/{{js_file}}"></script>
+</head>
+<body>
+    <div id="header">
+        <a id="back-to-home" href="/campaigns/">
+            <h2>Campaign Manager</h2>
+        </a>
+        <div id="user-actions">
+            <a href="/campaigns/">My Campaigns</a>
+            <a href="/users/logout/">Sign Out</a>
+        </div>
+    </div>
+    <h1>Convert Note {{current_note.title}}</h1>
+    {% if conversion_types %}
+        <form id="convert-note" action="" method="post">
+            <label>
+                Convert to:
+                <select id="conversion-type" name="conversion_type" required>
+                    {% for type in conversion_types %}
+                        <option value="{{type}}">{{type.__name__}}</option>
+                    {% endfor %}
+                </select>
+            </label>
+            <button type="submit">Convert</button>
+        </form>
+    {% else %}
+        <p>Sorry, but {{current_note.title}} couldn't be converted into any known types automatically.</p>
+        <a href="/campaigns/{{current_campaign.id}}/notes/{{current_note.id}}/">Return to Previous Page</a>
+    {% endif %}
+</body>
+</html>

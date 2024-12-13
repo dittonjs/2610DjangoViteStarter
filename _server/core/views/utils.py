@@ -419,7 +419,7 @@ def get_conversion_types(note: Note) -> list[Type[models.Model]]:
     Returns:
         conversion_types (list[Type[models.Model]]): The models the Note can be converted to
     """
-    possible_types = [Location, Organization, Character, Event]
+    possible_types: list[Type[models.Model]] = [Location, Organization, Character, Event]
     if note.start_time is not None or note.end_time is not None:
         if note.hostility is not None:
             possible_types = []
@@ -438,7 +438,7 @@ def get_conversion_types(note: Note) -> list[Type[models.Model]]:
             possible_types = [Location]
         else:
             possible_types = []
-            return possible_types
+    return possible_types
 
 
 def note_convert(req: HttpRequest, campaign: Campaign, note: Note) -> HttpResponse:

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Campaign Manager - Home</title>
+    <link rel="stylesheet" href="/static/{{css_file}}" />
+    <script type="module" src="/static/{{js_file}}"></script>
+</head>
+<body>
+    <div id="header">
+        <a id="back-to-home" href="/campaigns/">
+            <h2>Campaign Manager</h2>
+        </a>
+        <div id="user-actions">
+            <a href="/campaigns/">My Campaigns</a>
+            <a href="/users/logout/">Sign Out</a>
+        </div>
+    </div>
+    <h1>{{current_note.title}}</h1>
+    <em>Note for campaign {{current_campaign.name}}</em>
+    <div class="note-actions">
+        <a class="new-button" href="convert/">Convert to...</a>
+        <a class="edit-button" href="edit/">Edit</a>
+        <a class="delete-button" href="delete/">Delete</a>
+    </div>
+    {% if current_note.content %}
+        <div class="info-card">
+            <h3>Content</h3>
+            <p>{{current_note.content}}</p>
+        </div>
+    {% endif %}
+    {% if current_note.start_time or current_note.end_time %}
+        <div class="info-card">
+            <h3>Time Frame</h3>
+            <p>{{current_note.start_time}} - {{current_note.end_time}}</p>
+        </div>
+    {% endif %}
+    {% if current_note.race or current_note.clazz or current_note.level %}
+        <div class="info-card">
+            <h3>Character-related Information</h3>
+            <p>Level {{current_note.level}} {{current_note.race}} {{current_note.clazz}}</p>
+        </div>
+    {% endif %}
+    {% if current_note.hostility %}
+        <div class="info-card">
+            <h3>Hostility</h3>
+            <p>{{{"F": "Friendly", "N": "Neutral", "H": "Hostile"}[current_note.hostility]}}</p>
+        </div>
+    {% endif %}
+    {% if current_note.locations %}
+        <div class="info-card">
+            <h3>Locations</h3>
+            <ul>
+                {% for location in current_note.locations %}
+                    <li><a href="/campaigns/{{current_campaign.id}}/locations/{{location.id}}/">{{location.name}}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+    {% if current_note.organizations %}
+        <div class="info-card">
+            <h3>Organizations</h3>
+            <ul>
+                {% for organization in current_note.organizations %}
+                    <li><a href="/campaigns/{{current_campaign.id}}/organizations/{{organization.id}}/">{{organization.name}}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+    {% if current_note.characters %}
+        <div class="info-card">
+            <h3>Characters</h3>
+            <ul>
+                {% for character in current_note.characters %}
+                    <li><a href="/campaigns/{{current_campaign.id}}/characters/{{character.id}}/">{{character.name}}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+</body>
+</html>
