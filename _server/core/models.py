@@ -6,6 +6,7 @@ HOSTILITY = (
     ("H", "Hostile"),
     ("N", "Neutral"),
     ("F", "Friendly"),
+    ("?", "Unknown"),
 )
 
 CLASSES = (
@@ -38,11 +39,13 @@ class Location(models.Model):
     FRIENDLY = 'F'
     NEUTRAL = 'N'
     HOSTILE = 'H'
+    UNKNOWN = '?'
 
     HOSTILITY_CHOICES = [
         (FRIENDLY, 'Friendly'),
         (NEUTRAL, 'Neutral'),
         (HOSTILE, 'Hostile'),
+        (UNKNOWN, 'Unknown'),
     ]
 
     id = models.BigAutoField(primary_key=True)
@@ -54,11 +57,23 @@ class Location(models.Model):
 
 
 class Organization(models.Model):
+    FRIENDLY = 'F'
+    NEUTRAL = 'N'
+    HOSTILE = 'H'
+    UNKNOWN = '?'
+
+    HOSTILITY_CHOICES = [
+        (FRIENDLY, 'Friendly'),
+        (NEUTRAL, 'Neutral'),
+        (HOSTILE, 'Hostile'),
+        (UNKNOWN, 'Unknown'),
+    ]
+
     id = models.BigAutoField(primary_key=True)
     campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE)
     name = models.TextField()
     location = models.ForeignKey(Location, on_delete=models.SET_NULL, null=True, blank=True)
-    related_organizations = models.ManyToManyField('self', related_name='related_organizations')
+    related_organizations = models.ManyToManyField('self', related_name='related_organizations', symmetrical=True, blank=True)
     description = models.TextField(null=True, blank=True)
     hostility = models.TextField(choices=HOSTILITY, default="N")
 

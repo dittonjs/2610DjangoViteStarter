@@ -28,25 +28,6 @@ def locations(req: HttpRequest, campaign_id: int) -> HttpResponse:
 
 
 # /campaigns/<int:campaign_id>/locations/new/
-# @login_required
-# def locations_new(req: HttpRequest, campaign_id: int) -> HttpResponse:
-#     campaign_opt = get_campaign_opt(campaign_id, req.user)
-#     if isinstance(campaign_opt, HttpResponse):
-#         return campaign_opt
-
-#     if req.method == "GET":
-#         context = {
-#             ASSET: ASSET_URL,
-#             CSS: CSS_FILE,
-#             CURRENT_USER: req.user,
-#             CURRENT_CAMPAIGN: campaign_opt,
-#             LOCATIONS: Location.objects.filter(campaign=campaign_opt),
-#         }
-#         return render(req, "campaigns/locations/new.html", context)
-#     # else it's POST, and it's a new location request
-#     return location_form(req, campaign_opt)
-
-### My version ###
 @login_required
 def locations_new(request, campaign_id):
     campaign = get_object_or_404(Campaign, id=campaign_id)
@@ -71,9 +52,6 @@ def locations_new(request, campaign_id):
     else:
         form = LocationForm()
     return render(request, "campaigns/locations/new.html", {"form": form, "campaign": campaign})
-
-### ###
-
 
 
 # /campaigns/<int:campaign_id>/locations/<int:location_id>/
