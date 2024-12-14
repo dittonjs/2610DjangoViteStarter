@@ -70,7 +70,7 @@ def locations_new(request, campaign_id):
             return HttpResponseBadRequest("Invalid data in form")
     else:
         form = LocationForm()
-    return render(request, "locations/new.html", {"form": form, "campaign": campaign})
+    return render(request, "campaigns/locations/new.html", {"form": form, "campaign": campaign})
 
 ### ###
 
