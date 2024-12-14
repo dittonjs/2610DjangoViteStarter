@@ -65,7 +65,7 @@ def locations_new(request, campaign_id):
             if neighbors:
                 location.neighboring_locations.set(neighbors)
 
-            return redirect("campaign_detail", campaign_id=campaign.id)
+            return redirect(f"/campaigns/{campaign.id}/")
         else:
             return HttpResponseBadRequest("Invalid data in form")
     else:

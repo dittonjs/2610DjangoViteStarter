@@ -48,7 +48,7 @@ class Location(models.Model):
     id = models.BigAutoField(primary_key=True)
     campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE, related_name="locations")
     name = models.TextField()
-    neighboring_locations = models.ManyToManyField('self', related_name='neighbors', symmetrical=True)
+    neighboring_locations = models.ManyToManyField('self', related_name='neighbors', symmetrical=True, blank=True)
     description = models.TextField(null=True, blank=True)
     hostility = models.TextField(choices=HOSTILITY_CHOICES, default="N")
 
