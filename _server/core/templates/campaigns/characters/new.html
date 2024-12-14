@@ -18,6 +18,7 @@
     </div>
     <h1>New Character</h1>
     <form id="new-campaign" action="" method="post">
+        {% csrf_token %}
         <label>
             Character Name
             <input type="text" name="name" id="character-name" required />

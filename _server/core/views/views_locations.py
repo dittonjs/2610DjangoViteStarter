@@ -7,6 +7,9 @@ from .utils import *
 from ..forms import LocationForm
 
 
+RELATED_LOCATIONS = "related_locations"
+
+
 # /campaigns/<int:campaign_id>/locations/
 @login_required
 def locations(req: HttpRequest, campaign_id: int) -> HttpResponse:
@@ -89,10 +92,11 @@ def locations_id(req: HttpRequest, campaign_id: int, location_id: int) -> HttpRe
         CURRENT_USER: req.user,
         CURRENT_CAMPAIGN: campaign_opt,
         CURRENT_LOCATION: location_opt,
+        RELATED_LOCATIONS: location_opt.neighboring_locations.all(),
         ORGANIZATIONS: Organization.objects.filter(location=location_opt),
         CHARACTERS: Character.objects.filter(from_location=location_opt),
         EVENTS: Event.objects.filter(location=location_opt),
-        NOTES: Note.objects.filter(location=location_opt),
+        NOTES: Note.objects.filter(locations=location_opt),
     }
     return render(req, "campaigns/locations/location.html", context)
 
@@ -114,6 +118,7 @@ def locations_edit(req: HttpRequest, campaign_id: int, location_id: int) -> Http
             CURRENT_USER: req.user,
             CURRENT_CAMPAIGN: campaign_opt,
             CURRENT_LOCATION: location_opt,
+            RELATED_LOCATIONS: location_opt.neighboring_locations.all(),
             LOCATIONS: Location.objects.filter(campaign=campaign_opt).exclude(id=location_opt.id),
         }
         return render(req, "campaigns/locations/edit.html", context)

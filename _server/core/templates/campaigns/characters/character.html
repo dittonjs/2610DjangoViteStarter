@@ -26,15 +26,29 @@
     <div class="info-card">
         <p>{{current_character.description}}</p>
     </div>
+    {% if current_character.hostility %}
+        <div class="info-card">
+            <h3>Hostility</h3>
+            <p>
+                {% if current_character.hostility == 'H' %}
+                    Hostile
+                {% elif current_character.hostility == 'F' %}
+                    Friendly
+                {% else %}
+                    Neutral
+                {% endif %}
+            </p>
+        </div>
+    {% endif %}
     <div class="info-card">
         <h3>From Location</h3>
         <p>{{current_character.from_location.name if current_character.from_location else "Unknown"}}</p>
     </div>
     <div class="info-card">
         <h3>Organization</h3>
-        {% if current_character.organizations %}
+        {% if character_organizations %}
             <ul>
-                {% for organization in current_character.organizations %}
+                {% for organization in character_organizations %}
                     <li><a href="/campaigns/{{current_campaign.id}}/organizations/{{organization.id}}/">{{organization.name}}</a></li>
                 {% endfor %}
             </ul>
@@ -44,9 +58,9 @@
     </div>
     <div class="info-card">
         <h3>Related Characters</h3>
-        {% if current_character.related_characters %}
+        {% if related_characters %}
             <ul>
-                {% for character in current_character.related_characters %}
+                {% for character in related_characters %}
                     <li><a href="/campaigns/{{current_campaign.id}}/characters/{{character.id}}/">{{character.name}}</a></li>
                 {% endfor %}
             </ul>

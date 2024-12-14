@@ -4,9 +4,9 @@ html {
 }
 
 body {
-    margin: 0;
-    margin-top: 100px;
-    background-color: lightgreen;
+    margin: 25px;
+    margin-top: 75px;
+    background-color: #e0f2e9;
     display: flex;
     flex-direction: column;
     align-items: left;
@@ -17,7 +17,7 @@ body {
     top: 0;
     left: 0;
     width: 100%;
-    height: 100px;
+    height: 75px;
     background-color: darkgreen;
     color: white;
     display: flex;
@@ -28,7 +28,7 @@ body {
 #header a {
     color: white;
     margin: 0 25px;
-    font-size: 2em;
+    font-size: 1.5em;
 }
 
 #back-to-home {
@@ -57,43 +57,61 @@ body {
 #site-description p {
     margin: 0;
     align-self: center;
+    font-size: 1.5em;
 }
 
 h1 {
-    margin: 25px;
-    font-size: 4em;
+    font-size: 3em;
 }
 
 .campaign-items {
     display: flex;
     flex-direction: column;
     align-items: left;
-    padding: 5px;
+    padding: 0 10px;
     margin: 10px;
     border: 2px solid white;
     border-radius: 15px;
-    background-color: maroon;
-}
-
-.campaign-items h2 {
-    color: white;
+    background-color: #FFBF00;
 }
 
 .new-button {
     color: lime;
+    text-shadow: 1px 1px 2px black;
+    font-size: 1.5em;
+    margin-right: 10px;
 }
 
 .edit-button {
     color: cyan;
+    text-shadow: 1px 1px 2px black;
+    font-size: 1.5em;
+    margin-right: 10px;
 }
 
 .delete-button {
     color: red;
+    text-shadow: 1px 1px 2px black;
+    font-size: 1.5em;
+    margin-right: 10px;
+}
+
+.campaign-items .new-button {
+    font-size: 1.25em;
+}
+
+.campaign-items .edit-button {
+    font-size: 1.25em;
+}
+
+.campaign-items .delete-button {
+    font-size: 1.25em;
 }
 
 .info-card {
     align-self: center;
-    margin: 10px 0;
+    margin: 20px 0;
+    padding: 10px;
     width: 80%;
     min-height: 100px;
     border: 2px solid black;
@@ -101,8 +119,8 @@ h1 {
     background-color: honeydew;
 }
 
-.info-card h2 {
-    margin: 20px;
+.info-card h3 {
+    margin: 10px;
 }
 
 .info-card p {
@@ -121,13 +139,52 @@ form {
 
 form label {
     margin: 5px 0;
+    font-weight: bold;
+}
+
+.form-group {
+    margin: 5px 0; /* accounts for 'form label' different style */
 }
 
 form input {
     padding: 5px;
     width: 99%;
     font-size: 1em;
+    border: 2px solid lightgrey;
     border-radius: 5px;
+}
+
+form input:focus {
+    border: 2px solid black;
+}
+
+form textarea {
+    padding: 5px;
+    width: 99%;
+    min-height: 50px;
+    font-size: 1em;
+    border: 2px solid lightgrey;
+    border-radius: 5px;
+}
+
+form textarea:focus {
+    border: 2px solid black;
+}
+
+form select {
+    padding: 5px;
+    width: 99%;
+    font-size: 1em;
+    border: 2px solid lightgrey;
+    border-radius: 5px;
+}
+
+form p {
+    margin: 0;
+}
+
+form em {
+    font-weight: normal;
 }
 
 .input-checkbox {
@@ -135,7 +192,7 @@ form input {
     grid-template-columns: auto 1fr;
 }
 
-.input-checkbox span {
+.input-checkbox label {
     margin-left: 10px;
 }
 

@@ -44,34 +44,42 @@
     {% if current_note.hostility %}
         <div class="info-card">
             <h3>Hostility</h3>
-            <p>{{{"F": "Friendly", "N": "Neutral", "H": "Hostile"}[current_note.hostility]}}</p>
+            <p>
+                {% if location.hostility == 'H' %}
+                    Hostile
+                {% elif location.hostility == 'F' %}
+                    Friendly
+                {% else %}
+                    Neutral
+                {% endif %}
+            </p>
         </div>
     {% endif %}
-    {% if current_note.locations %}
+    {% if note_locations %}
         <div class="info-card">
             <h3>Locations</h3>
             <ul>
-                {% for location in current_note.locations %}
+                {% for location in note_locations %}
                     <li><a href="/campaigns/{{current_campaign.id}}/locations/{{location.id}}/">{{location.name}}</a></li>
                 {% endfor %}
             </ul>
         </div>
     {% endif %}
-    {% if current_note.organizations %}
+    {% if note_organizations %}
         <div class="info-card">
             <h3>Organizations</h3>
             <ul>
-                {% for organization in current_note.organizations %}
+                {% for organization in note_organizations %}
                     <li><a href="/campaigns/{{current_campaign.id}}/organizations/{{organization.id}}/">{{organization.name}}</a></li>
                 {% endfor %}
             </ul>
         </div>
     {% endif %}
-    {% if current_note.characters %}
+    {% if note_characters %}
         <div class="info-card">
             <h3>Characters</h3>
             <ul>
-                {% for character in current_note.characters %}
+                {% for character in note_characters %}
                     <li><a href="/campaigns/{{current_campaign.id}}/characters/{{character.id}}/">{{character.name}}</a></li>
                 {% endfor %}
             </ul>

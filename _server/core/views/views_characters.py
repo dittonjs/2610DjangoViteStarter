@@ -6,6 +6,10 @@ from ..models import CLASSES, Location, Organization, Character, Event, Note
 from .utils import *
 
 
+RELATED_CHARACTERS = "related_characters"
+CHARACTER_ORGANIZATIONS = "character_organizations"
+
+
 # /campaigns/<int:campaign_id>/characters/
 @login_required
 def characters(req: HttpRequest, campaign_id: int) -> HttpResponse:
@@ -60,6 +64,8 @@ def characters_id(req: HttpRequest, campaign_id: int, character_id: int) -> Http
         CURRENT_USER: req.user,
         CURRENT_CAMPAIGN: campaign_opt,
         CURRENT_CHARACTER: character_opt,
+        RELATED_CHARACTERS: character_opt.related_characters.all(),
+        CHARACTER_ORGANIZATIONS: character_opt.organizations.all(),
         EVENTS: Event.objects.filter(involved_characters=character_opt),
         NOTES: Note.objects.filter(involved_characters=character_opt),
     }
@@ -82,6 +88,8 @@ def characters_edit(req: HttpRequest, campaign_id: int, character_id: int) -> Ht
             CURRENT_USER: req.user,
             CURRENT_CAMPAIGN: campaign_opt,
             CURRENT_CHARACTER: character_opt,
+            RELATED_CHARACTERS: character_opt.related_characters.all(),
+            CHARACTER_ORGANIZATIONS: character_opt.organizations.all(),
             CLASSES: dict(CLASSES),
             LOCATIONS: Location.objects.filter(campaign=campaign_opt),
             ORGANIZATIONS: Organization.objects.filter(campaign=campaign_opt),

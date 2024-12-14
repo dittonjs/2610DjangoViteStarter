@@ -6,6 +6,10 @@ from ..models import Location, Organization, Character, Event
 from .utils import *
 
 
+INVOLVED_ORGANIZATIONS = "involved_organizations"
+INVOLVED_CHARACTERS = "involved_characters"
+
+
 # /campaigns/<int:campaign_id>/events/
 @login_required
 def events(req: HttpRequest, campaign_id: int) -> HttpResponse:
@@ -61,6 +65,8 @@ def events_id(req: HttpRequest, campaign_id: int, event_id: int) -> HttpResponse
         CURRENT_USER: req.user,
         CURRENT_CAMPAIGN: campaign_opt,
         CURRENT_EVENT: event_opt,
+        INVOLVED_ORGANIZATIONS: event_opt.involved_organizations.all(),
+        INVOLVED_CHARACTERS: event_opt.involved_characters.all(),
         ORGANIZATIONS: Organization.objects.filter(event=event_opt),
         CHARACTERS: Character.objects.filter(event=event_opt),
     }
@@ -84,6 +90,8 @@ def events_edit(req: HttpRequest, campaign_id: int, event_id: int) -> HttpRespon
             CURRENT_USER: req.user,
             CURRENT_CAMPAIGN: campaign_opt,
             CURRENT_EVENT: event_opt,
+            INVOLVED_ORGANIZATIONS: event_opt.involved_organizations.all(),
+            INVOLVED_CHARACTERS: event_opt.involved_characters.all(),
             LOCATIONS: Location.objects.filter(campaign=campaign_opt),
             ORGANIZATIONS: Organization.objects.filter(campaign=campaign_opt),
             CHARACTERS: Character.objects.filter(campaign=campaign_opt),

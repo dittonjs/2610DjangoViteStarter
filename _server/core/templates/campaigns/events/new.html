@@ -18,6 +18,7 @@
     </div>
     <h1>Record Event</h1>
     <form id="new-event" action="" method="post">
+        {% csrf_token %}
         <label>
             Event Title
             <input type="text" name="title" id="event-title" required />

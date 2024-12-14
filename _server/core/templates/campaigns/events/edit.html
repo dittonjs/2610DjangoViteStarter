@@ -18,6 +18,7 @@
     </div>
     <h1>Record Event</h1>
     <form id="new-event" action="" method="post">
+        {% csrf_token %}
         <label>
             Event Title
             <input type="text" name="title" id="event-title" value="{{current_event.title}}" required />
@@ -47,7 +48,7 @@
             {% if organizations %}
                 <select name="involved_organizations" id="event-organizations" multiple>
                     {% for organization in organizations %}
-                        <option value="{{organization.id}}" {% if organization in current_event.involved_organizations %}selected{% endif %}>{{organization.name}}</option>
+                        <option value="{{organization.id}}" {% if organization in involved_organizations %}selected{% endif %}>{{organization.name}}</option>
                     {% endfor %}
                 </select>
             {% else %}
@@ -59,7 +60,7 @@
             {% if characters %}
                 <select name="involved_characters" id="event-involved-characters" multiple>
                     {% for character in characters %}
-                        <option value="{{character.id}}" {% if character in current_event.involved_characters %}selected{% endif %}>{{character.name}}</option>
+                        <option value="{{character.id}}" {% if character in involved_characters %}selected{% endif %}>{{character.name}}</option>
                     {% endfor %}
                 </select>
             {% else %}

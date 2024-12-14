@@ -31,28 +31,6 @@
                         None set
                     {% endif %}
                 </p>
-                <p>Involved Organizations:
-                    {% if event.organizations %}
-                        <ul>
-                            {% for organization in event.organizations %}
-                                <li><a href="/campaigns/{{current_campaign.id}}/organizations/{{organization.id}}/">{{organization.name}}</a></li>
-                            {% endfor %}
-                        </ul>
-                    {% else %}
-                        None set
-                    {% endif %}
-                </p>
-                <p>Involved Characters:
-                    {% if event.involved_characters %}
-                        <ul>
-                            {% for character in event.involved_characters %}
-                                <li><a href="/campaigns/{{current_campaign.id}}/characters/{{character.id}}/">{{character.name}}</a></li>
-                            {% endfor %}
-                        </ul>
-                    {% else %}
-                        None set
-                    {% endif %}
-                </p>
             </div>
         {% endfor %}
     {% else %}

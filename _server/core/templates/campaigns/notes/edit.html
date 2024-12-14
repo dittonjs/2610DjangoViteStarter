@@ -18,6 +18,7 @@
     </div>
     <h1>Edit Note</h1>
     <form id="edit-note" action="" method="post">
+        {% csrf_token %}
         <label>
             Name
             <input type="text" name="title" id="note-title" value="{{current_note.title}}" required />
@@ -59,7 +60,7 @@
             {% if locations %}
                 <select name="locations" id="note-locations" multiple>
                     {% for location in locations %}
-                        <option value="{{location.id}}" {% if location in current_note.locations}selected{% endif %}>{{location.name}}</option>
+                        <option value="{{location.id}}" {% if location in note_locations}selected{% endif %}>{{location.name}}</option>
                     {% endfor %}
                 </select>
             {% else %}
@@ -71,7 +72,7 @@
             {% if organizations %}
                 <select name="organizations" id="note-organizations" multiple>
                     {% for organization in organizations %}
-                        <option value="{{organization.id}}" {% if organization in current_note.organizations}selected{% endif %}>{{organization.name}}</option>
+                        <option value="{{organization.id}}" {% if organization in note_organizations}selected{% endif %}>{{organization.name}}</option>
                     {% endfor %}
                 </select>
             {% else %}
@@ -83,7 +84,7 @@
             {% if characters %}
                 <select name="characters" id="note-characters" multiple>
                     {% for character in characters %}
-                        <option value="{{character.id}}" {% if character in current_note.characters %}selected{% endif %}>{{character.name}}</option>
+                        <option value="{{character.id}}" {% if character in note_characters %}selected{% endif %}>{{character.name}}</option>
                     {% endfor %}
                 </select>
             {% else %}

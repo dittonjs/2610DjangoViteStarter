@@ -22,7 +22,15 @@
         {% for organization in organizations %}
             <div class="info-card organization-card">
                 <h3><a href="{{organization.id}}/">{{organization.name}}</a></h3>
-                <p>{{{"F": "Friendly", "N": "Neutral", "H": "Hostile"}[organization.hostility]}}</p>
+                <p>
+                    {% if location.hostility == 'H' %}
+                        Hostile
+                    {% elif location.hostility == 'F' %}
+                        Friendly
+                    {% else %}
+                        Neutral
+                    {% endif %}
+                </p>
                 <p>Location:
                     {% if organization.location %}
                         <a href="/campaigns/{{current_campaign.id}}/locations/{{organization.location.id}}/">{{organization.location.name}}</a>
@@ -31,17 +39,6 @@
                     {% endif %}
                 </p>
                 <p>{{organization.description}}</p>
-                <p>Related Organizations:
-                    {% if organization.related_organizations %}
-                        <ul>
-                            {% for related_organization in organization.related_organizations %}
-                                <li><a href="/campaigns/{{current_campaign.id}}/organizations/{{related_organization.id}}/">{{related_organization.name}}</a></li>
-                            {% endfor %}
-                        </ul>
-                    {% else %}
-                        None
-                    {% endif %}
-                </p>
             </div>
         {% endfor %}
     {% else %}

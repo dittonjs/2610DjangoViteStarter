@@ -18,6 +18,7 @@
     </div>
     <h1>Edit Character</h1>
     <form id="new-campaign" action="" method="post">
+        {% csrf_token %}
         <label>
             Character Name
             <input type="text" name="name" id="character-name" value="{{current_character.name}}" required />
@@ -55,7 +56,7 @@
                 <select name="organizations" id="character-organizations" multiple>
                     {% for organization in organizations %}
                         <option value="{{organization.id}}"
-                                {% if organization in current_character.organizations %}selected{% endif %}>
+                                {% if organization in character_organizations %}selected{% endif %}>
                             {{organization.name}}
                         </option>
                     {% endfor %}
@@ -70,7 +71,7 @@
                 <select name="related_characters" id="character-related-characters" multiple>
                     {% for character in characters %}
                         <option value="{{character.id}}"
-                                {% if character in current_character.related_characters %}selected{% endif %}>
+                                {% if character in related_characters %}selected{% endif %}>
                             {{character.name}}
                         </option>
                     {% endfor %}
