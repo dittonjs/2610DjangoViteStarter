@@ -42,6 +42,8 @@ def campaigns_new(req: HttpRequest) -> HttpResponse:
 ### My version, see if it makes sense to you ###
 
 def campaigns_new(request):
+    all_users = User.objects.all()
+
     if request.method == 'POST':
         name = request.POST.get('name')
         description = request.POST.get('description')
@@ -56,13 +58,11 @@ def campaigns_new(request):
             is_public=is_public,
         )
 
-        # Update the Many-to-Many field, the issue is you were trying to directly update it but we need this to do it for us
-        if approved_users:  # Ensure you have a valid list, if public we can default to all
-            campaign.approved_users.set(approved_users)
+        campaign.save()
+        campaign.approved_users.set(approved_users)
 
         return redirect('/campaigns/')  # Redirect to the desired page after saving
     
-        all_users = User.objects.all()
 
     # In the future we should add a played with or friends feature, this is a safety risk if it wasn't just a small project for friends
     return render(request, 'campaigns/new_campaign.html', {'all_users': all_users})

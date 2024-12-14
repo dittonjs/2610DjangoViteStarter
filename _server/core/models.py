@@ -35,12 +35,22 @@ class Campaign(models.Model):
 
 
 class Location(models.Model):
+    FRIENDLY = 'F'
+    NEUTRAL = 'N'
+    HOSTILE = 'H'
+
+    HOSTILITY_CHOICES = [
+        (FRIENDLY, 'Friendly'),
+        (NEUTRAL, 'Neutral'),
+        (HOSTILE, 'Hostile'),
+    ]
+
     id = models.BigAutoField(primary_key=True)
-    campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE)
+    campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE, related_name="locations")
     name = models.TextField()
-    neighboring_locations = models.ManyToManyField('self', related_name='neighboring_locations')
+    neighboring_locations = models.ManyToManyField('self', related_name='neighbors', symmetrical=True)
     description = models.TextField(null=True, blank=True)
-    hostility = models.TextField(choices=HOSTILITY, default="N")
+    hostility = models.TextField(choices=HOSTILITY_CHOICES, default="N")
 
 
 class Organization(models.Model):

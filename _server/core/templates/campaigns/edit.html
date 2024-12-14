@@ -18,6 +18,7 @@
     </div>
     <h1>Edit Campaign</h1>
     <form id="edit-campaign" action="" method="post">
+        {% csrf_token %}
         <label>
             Campaign Name
             <input type="text" name="name" id="campaign-name" value="{{current_campaign.name}}" required />
