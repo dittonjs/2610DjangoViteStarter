@@ -30,33 +30,14 @@
                     <p>Level {{note.level}} {{note.race}} {{note.clazz}}</p>
                 {% endif %}
                 {% if note.hostility %}
-                    <p>{{{"F": "Friendly", "N": "Neutral", "H": "Hostile"}[note.hostility]}} Hostility</p>
-                {% endif %}
-                {% if note.locations %}
-                    <p>Locations: 
-                        <ul>
-                            {% for location in note.locations %}
-                                <li><a href="/campaigns/{{current_campaign.id}}/locations/{{location.id}}/">{{location.name}}</a></li>
-                            {% endfor %}
-                        </ul>
-                    </p>
-                {% endif %}
-                {% if note.organizations %}
-                    <p>Organizations: 
-                        <ul>
-                            {% for organization in note.organizations %}
-                                <li><a href="/campaigns/{{current_campaign.id}}/organizations/{{organization.id}}/">{{organization.name}}</a></li>
-                            {% endfor %}
-                        </ul>
-                    </p>
-                {% endif %}
-                {% if note.characters %}
-                    <p>Characters: 
-                        <ul>
-                            {% for character in note.characters %}
-                                <li><a href="/campaigns/{{current_campaign.id}}/characters/{{character.id}}/">{{character.name}}</a></li>
-                            {% endfor %}
-                        </ul>
+                    <p>
+                        {% if location.hostility == 'H' %}
+                            Hostile
+                        {% elif location.hostility == 'F' %}
+                            Friendly
+                        {% else %}
+                            Neutral
+                        {% endif %}
                     </p>
                 {% endif %}
             </div>

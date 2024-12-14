@@ -19,6 +19,7 @@
     <h1>Convert Note {{current_note.title}}</h1>
     {% if conversion_types %}
         <form id="convert-note" action="" method="post">
+            {% csrf_token %}
             <label>
                 Convert to:
                 <select id="conversion-type" name="conversion_type" required>

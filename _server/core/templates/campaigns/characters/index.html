@@ -23,33 +23,22 @@
             <div class="info-card character-card">
                 <h3><a href="{{character.id}}/">{{character.name}}</a></h3>
                 <p>{% if character.clazz %}Level {{character.level}} {% endif %}{{character.race}}{% if character.clazz %} {{character.clazz}}{% endif %}</p>
+                {% if character.hostility %}
+                    <p>
+                        {% if character.hostility == 'H' %}
+                            Hostile
+                        {% elif character.hostility == 'F' %}
+                            Friendly
+                        {% else %}
+                            Neutral
+                        {% endif %}
+                    </p>
+                {% endif %}
                 <p>From location:
                     {% if character.from_location %}
                         <a href="/campaigns/{{current_campaign.id}}/locations/{{character.from_location.id}}/">{{character.from_location.name}}</a>
                     {% else %}
                         Unknown
-                    {% endif %}
-                </p>
-                <p>Organizations:
-                    {% if character.organizations %}
-                        <ul>
-                            {% for organization in character.organizations %}
-                                <li><a href="/campaigns/{{current_campaign.id}}/organizations/{{organization.id}}/">{{organization.name}}</a></li>
-                            {% endfor %}
-                        </ul>
-                    {% else %}
-                        None
-                    {% endif %}
-                </p>
-                <p>Related Characters:
-                    {% if character.related_characters %}
-                        <ul>
-                            {% for related_character in character.related_characters %}
-                                <li><a href="/campaigns/{{current_campaign.id}}/characters/{{related_character.id}}/">{{related_character.name}}</a></li>
-                            {% endfor %}
-                        </ul>
-                    {% else %}
-                        None
                     {% endif %}
                 </p>
                 <p>{{character.description}}</p>

@@ -22,19 +22,16 @@
         {% for location in locations %}
             <div class="info-card location-card">
                 <h3><a href="{{location.id}}/">{{location.name}}</a></h3>
-                <p>{{{"F": "Friendly", "N": "Neutral", "H": "Hostile"}[location.hostility]}}</p>
-                <p>{{location.description}}</p>
-                <p>Neighboring Locations:
-                    {% if location.neighboring_locations %}
-                        <ul>
-                            {% for neighbor in location.neighboring_locations %}
-                                <li><a href="/campaigns/{{current_campaign.id}}/locations/{{neighbor.id}}/">{{neighbor.name}}</a></li>
-                            {% endfor %}
-                        </ul>
+                <p>
+                    {% if location.hostility == 'H' %}
+                        Hostile
+                    {% elif location.hostility == 'F' %}
+                        Friendly
                     {% else %}
-                        None added
+                        Neutral
                     {% endif %}
                 </p>
+                <p>{{location.description}}</p>
             </div>
         {% endfor %}
     {% else %}

@@ -36,9 +36,9 @@
     </div>
     <div class="info-card">
         <h3>Involved Organizations</h3>
-        {% if current_event.involved_organizations %}
+        {% if involved_organizations %}
             <ul>
-                {% for organization in current_event.involved_organizations %}
+                {% for organization in involved_organizations %}
                     <li><a href="/campaigns/{{current_campaign.id}}/organizations/{{organization.id}}/">{{organization.name}}</a></li>
                 {% endfor %}
             </ul>
@@ -48,9 +48,9 @@
     </div>
     <div class="info-card">
         <h3>Involved Characters</h3>
-        {% if current_event.involved_characters %}
+        {% if involved_characters %}
             <ul>
-                {% for character in current_event.involved_characters %}
+                {% for character in involved_characters %}
                     <li><a href="/campaigns/{{current_campaign.id}}/characters/{{character.id}}/">{{character.name}}</a></li>
                 {% endfor %}
             </ul>

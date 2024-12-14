@@ -22,7 +22,15 @@
         <a class="edit-button" href="edit/">Edit</a>
         <a class="delete-button" href="delete/">Delete</a>
     </div>
-    <p>{{{"F": "Friendly", "N": "Neutral", "H": "Hostile"}[current_location.hostility]}}</p>
+    <p>
+        {% if location.hostility == 'H' %}
+            Hostile
+        {% elif location.hostility == 'F' %}
+            Friendly
+        {% else %}
+            Neutral
+        {% endif %}
+    </p>
     <div class="info-card">
         <h3>Location:</h3>
         {% if current_organization.location %}
@@ -37,9 +45,9 @@
     </div>
     <div class="info-card">
         <h3>Related Organizations:</h3>
-        {% if current_organization.related_organizations %}
+        {% if related_organizations %}
             <ul>
-                {% for organization in current_organization.related_organizations %}
+                {% for organization in related_organizations %}
                     <li><a href="/campaigns/{{current_campaign.id}}/organizations/{{organization.id}}/">{{organization.name}}</a></li>
                 {% endfor %}
             </ul>

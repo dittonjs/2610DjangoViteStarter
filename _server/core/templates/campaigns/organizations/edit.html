@@ -18,6 +18,7 @@
     </div>
     <h1>Edit Organization</h1>
     <form id="edit-organization" action="" method="post">
+        {% csrf_token %}
         <label>
             Name
             <input type="text" name="name" id="organization-name" value="{{current_organization.name}}" required />
@@ -51,7 +52,7 @@
             {% if organizations %}
                 <select name="related_organizations" id="organization-related" multiple>
                     {% for organization in organizations %}
-                        <option value="{{organization.id}}" {% if organization in current_organization.related_organizations %}selected{% endif %}>{{organization.name}}</option>
+                        <option value="{{organization.id}}" {% if organization in related_organizations %}selected{% endif %}>{{organization.name}}</option>
                     {% endfor %}
                 </select>
             {% else %}

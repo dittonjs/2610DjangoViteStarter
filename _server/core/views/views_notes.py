@@ -2,8 +2,13 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import redirect, render
 
-from ..models import Location, Organization, Character, Event
+from ..models import Location, Organization, Character
 from .utils import *
+
+
+NOTE_LOCATIONS = "note_locations"
+NOTE_ORGANIZATIONS = "note_organizations"
+NOTE_CHARACTERS = "note_characters"
 
 
 # /campaigns/<int:campaign_id>/notes/
@@ -61,6 +66,9 @@ def notes_id(req: HttpRequest, campaign_id: int, note_id: int) -> HttpResponse:
         CURRENT_USER: req.user,
         CURRENT_CAMPAIGN: campaign_opt,
         CURRENT_NOTE: note_opt,
+        NOTE_LOCATIONS: note_opt.locations.all(),
+        NOTE_ORGANIZATIONS: note_opt.organizations.all(),
+        NOTE_CHARACTERS: note_opt.characters.all(),
     }
     return render(req, "campaigns/notes/note.html", context)
 
@@ -82,6 +90,9 @@ def notes_edit(req: HttpRequest, campaign_id: int, note_id: int) -> HttpResponse
             CURRENT_USER: req.user,
             CURRENT_CAMPAIGN: campaign_opt,
             CURRENT_NOTE: note_opt,
+            NOTE_LOCATIONS: note_opt.locations.all(),
+            NOTE_ORGANIZATIONS: note_opt.organizations.all(),
+            NOTE_CHARACTERS: note_opt.characters.all(),
             LOCATIONS: Location.objects.filter(campaign=campaign_opt),
             ORGANIZATIONS: Organization.objects.filter(campaign=campaign_opt),
             CHARACTERS: Character.objects.filter(campaign=campaign_opt),

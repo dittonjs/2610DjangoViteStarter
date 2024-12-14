@@ -6,6 +6,9 @@ from ..models import HOSTILITY, Location, Organization, Character, Event, Note
 from .utils import *
 
 
+RELATED_ORGANIZATIONS = "related_organizations"
+
+
 # /campaigns/<int:campaign_id>/organizations/
 @login_required
 def organizations(req: HttpRequest, campaign_id: int) -> HttpResponse:
@@ -96,7 +99,7 @@ def organizations_id(req: HttpRequest, campaign_id: int, organization_id: int) -
         CURRENT_USER: req.user,
         CURRENT_CAMPAIGN: campaign_opt,
         CURRENT_ORGANIZATION: organization_opt,
-        ORGANIZATIONS: Organization.objects.filter(campaign=campaign_opt),  # Related organizations
+        RELATED_ORGANIZATIONS: organization_opt.related_organizations.all(),
         CHARACTERS: Character.objects.filter(organization=organization_opt),
         EVENTS: Event.objects.filter(organization=organization_opt),
         NOTES: Note.objects.filter(organization=organization_opt),
@@ -121,6 +124,7 @@ def organizations_edit(req: HttpRequest, campaign_id: int, organization_id: int)
             CURRENT_USER: req.user,
             CURRENT_CAMPAIGN: campaign_opt,
             CURRENT_ORGANIZATION: organization_opt,
+            RELATED_ORGANIZATIONS: organization_opt.related_organizations.all(),
             LOCATIONS: Location.objects.filter(campaign=campaign_opt),
             ORGANIZATIONS: Organization.objects.filter(campaign=campaign_opt)\
                                                .exclude(id=organization_opt.id),

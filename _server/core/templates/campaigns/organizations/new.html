@@ -17,7 +17,8 @@
         </div>
     </div>
     <h1>Add Organization</h1>
-    <form id="new-organization" action="" method="post">
+    <form id="new-organization" action="" method="post">}
+        {% csrf_token %}
         <label>
             Name
             <input type="text" name="name" id="organization-name" required />

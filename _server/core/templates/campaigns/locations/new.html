@@ -18,6 +18,7 @@
     </div>
     <h1>Add Location</h1>
     <form id="new-location" action="" method="post">
+        {% csrf_token %}
         <label>
             Name
             <input type="text" name="name" id="location-name" required />
@@ -33,6 +34,7 @@
         <label>
             Neighboring Locations
             {% if locations %}
+                <em>Hold Ctrl to select multiple</em>
                 <select name="neighboring_locations" id="location-neighbors" multiple>
                     {% for location in locations %}
                         <option value="{{location.id}}">{{location.name}}</option>

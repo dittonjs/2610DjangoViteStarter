@@ -97,6 +97,7 @@ def campaign_form(req: HttpRequest, campaign: Campaign | None=None) -> HttpRespo
         campaign.is_public = is_public
     else:
         campaign = Campaign(dm=req.user, name=name, description=description, is_public=is_public)
+        campaign.save()  # must be saved before we can set approved users
     campaign.approved_users.set(approved_users)
     campaign.save()
     return redirect(f"/campaigns/{campaign.id}/")
@@ -133,6 +134,7 @@ def location_form(req: HttpRequest, campaign: Campaign, location: Location | Non
     else:
         location = Location(campaign=campaign, name=name, description=description,
                             hostility=hostility)
+        location.save()  # must be saved before we can set neighboring locations
     location.neighboring_locations.set(neighboring_locations)
     location.save()
     return redirect(f"/campaigns/{campaign.id}/locations/{location.id}/")
@@ -237,6 +239,7 @@ def character_form(req: HttpRequest, campaign: Campaign, character: Character | 
             character = NonPlayerCharacter(campaign=campaign, name=name, race=race, clazz=clazz,
                                            level=level, from_location=location_opt,
                                            description=description, hostility=hostility)
+            character.save()  # must be saved before we can set related characters & orgs
     character.organizations.set(organizations)
     character.related_characters.set(characters)
     character.save()
@@ -305,6 +308,7 @@ def event_form(req: HttpRequest, campaign: Campaign, event: Event | None=None) -
     else:
         event = Event(campaign=campaign, title=title, start_time=start_time, end_time=end_time,
                       location=location_opt, description=description)
+        event.save()  # must be saved before we can set involved orgs & chars
     event.involved_organizations.set(organizations)
     event.involved_characters.set(characters)
     event.save()
@@ -395,6 +399,7 @@ def note_form(req: HttpRequest, campaign: Campaign, note: Note | None=None) -> H
     else:
         note = Note(campaign=campaign, title=title, start_time=start_time, end_time=end_time,
                     race=race, clazz=clazz, level=level, hostility=hostility, content=content)
+        note.save()  # must be saved before we can set locations, orgs, & chars
     note.locations.set(locations)
     note.organizations.set(organizations)
     note.characters.set(characters)

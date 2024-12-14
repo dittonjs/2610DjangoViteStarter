@@ -22,13 +22,21 @@
         <a class="edit-button" href="edit/">Edit</a>
         <a class="delete-button" href="delete/">Delete</a>
     </div>
-    <p>{{{"F": "Friendly", "N": "Neutral", "H": "Hostile"}[current_location.hostility]}}</p>
+    <p>
+        {% if location.hostility == 'H' %}
+            Hostile
+        {% elif location.hostility == 'F' %}
+            Friendly
+        {% else %}
+            Neutral
+        {% endif %}
+    </p>
     <p>{{current_location.description}}</p>
     <div class="info-card">
         <h3>Neighboring Locations:</h3>
-        {% if current_location.neighboring_locations %}
+        {% if neighboring_locations %}
             <ul>
-                {% for neighbor in current_location.neighboring_locations %}
+                {% for neighbor in neighboring_locations %}
                     <li><a href="/campaigns/{{current_campaign.id}}/locations/{{neighbor.id}}/">{{neighbor.name}}</a></li>
                 {% endfor %}
             </ul>
