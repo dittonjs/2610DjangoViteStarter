@@ -19,10 +19,18 @@
     <h1>{{current_campaign.name}}</h1>
     <em>{% if current_campaign.is_public %}Public{% else %}Private{% endif %} Campaign</em>
     <div id="campaign-actions" class="note-actions">
+        <form method="POST" action="/campaigns/{{current_campaign.id}}/delete/">
+            {% csrf_token %}
+            <button class="delete-button" type="submit">Delete</button>
+        </form>
         <a class="edit-button" href="/campaigns/{{current_campaign.id}}/edit/">Edit</a>
-        <a class="delete-button" href="/campaigns/{{current_campaign.id}}/delete/">Delete</a>
     </div>
     <p>{{current_campaign.description}}</p>
+
+    <script>
+        const csrftoken = '{{ csrf_token }}';
+    </script>
+
     <div class="campaign-items">
         <div class="item-header">
             <h2>Locations</h2>

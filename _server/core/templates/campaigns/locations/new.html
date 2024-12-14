@@ -21,32 +21,19 @@
         {% csrf_token %}
         <label>
             Name
-            <input type="text" name="name" id="location-name" required />
+            {{ form.name }}
         </label>
         <label>
             Hostility
-            <select name="hostility" id="location-hostility" required>
-                <option value="F">Friendly</option>
-                <option value="N" selected>Neutral</option>
-                <option value="H">Hostile</option>
-            </select>
+            {{ form.hostility }}
         </label>
         <label>
             Neighboring Locations
-            {% if locations %}
-                <em>Hold Ctrl to select multiple</em>
-                <select name="neighboring_locations" id="location-neighbors" multiple>
-                    {% for location in locations %}
-                        <option value="{{location.id}}">{{location.name}}</option>
-                    {% endfor %}
-                </select>
-            {% else %}
-                <em>No other locations have been added to this campaign.</em>
-            {% endif %}
+            {{ form.neighboring_locations }}
         </label>
         <label>
             Description
-            <textarea name="description" id="location-description"></textarea>
+            {{ form.description }}
         </label>
         <button>Save and Return</button>
     </form>
