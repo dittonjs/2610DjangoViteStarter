@@ -2,12 +2,19 @@ from django.contrib.auth.models import User
 from django.db import models
 
 
-HOSTILITY = (
-    ("H", "Hostile"),
-    ("N", "Neutral"),
-    ("F", "Friendly"),
-    ("?", "Unknown"),
-)
+#Hostility 
+FRIENDLY = 'F'
+NEUTRAL = 'N'
+HOSTILE = 'H'
+UNKNOWN = '?'
+
+HOSTILITY_CHOICES = [
+    (FRIENDLY, 'Friendly'),
+    (NEUTRAL, 'Neutral'),
+    (HOSTILE, 'Hostile'),
+    (UNKNOWN, 'Unknown'),
+]
+
 
 CLASSES = (
     (None, ""),
@@ -36,46 +43,22 @@ class Campaign(models.Model):
 
 
 class Location(models.Model):
-    FRIENDLY = 'F'
-    NEUTRAL = 'N'
-    HOSTILE = 'H'
-    UNKNOWN = '?'
-
-    HOSTILITY_CHOICES = [
-        (FRIENDLY, 'Friendly'),
-        (NEUTRAL, 'Neutral'),
-        (HOSTILE, 'Hostile'),
-        (UNKNOWN, 'Unknown'),
-    ]
-
     id = models.BigAutoField(primary_key=True)
     campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE, related_name="locations")
     name = models.TextField()
     neighboring_locations = models.ManyToManyField('self', related_name='neighbors', symmetrical=True, blank=True)
     description = models.TextField(null=True, blank=True)
-    hostility = models.TextField(choices=HOSTILITY_CHOICES, default="N")
+    hostility = models.TextField(choices=HOSTILITY_CHOICES, default=NEUTRAL)
 
 
 class Organization(models.Model):
-    FRIENDLY = 'F'
-    NEUTRAL = 'N'
-    HOSTILE = 'H'
-    UNKNOWN = '?'
-
-    HOSTILITY_CHOICES = [
-        (FRIENDLY, 'Friendly'),
-        (NEUTRAL, 'Neutral'),
-        (HOSTILE, 'Hostile'),
-        (UNKNOWN, 'Unknown'),
-    ]
-
     id = models.BigAutoField(primary_key=True)
     campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE)
     name = models.TextField()
     location = models.ForeignKey(Location, on_delete=models.SET_NULL, null=True, blank=True)
     related_organizations = models.ManyToManyField('self', related_name='related_organizations', symmetrical=True, blank=True)
     description = models.TextField(null=True, blank=True)
-    hostility = models.TextField(choices=HOSTILITY, default="N")
+    hostility = models.TextField(choices=HOSTILITY_CHOICES, default=NEUTRAL)
 
 
 class Character(models.Model):
@@ -83,11 +66,12 @@ class Character(models.Model):
     campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE)
     name = models.TextField()
     race = models.TextField(default="Human", blank=True)
-    clazz = models.TextField(choices=CLASSES, null=True, blank=True)
+    class_field = models.TextField(choices=CLASSES, null=True, blank=True)
     level = models.PositiveSmallIntegerField(default=0, blank=True)
-    from_location = models.ForeignKey(Location, on_delete=models.SET_NULL, null=True, blank=True)
-    organizations = models.ManyToManyField(Organization, related_name='character_organizations')
-    related_characters = models.ManyToManyField('self', related_name='related_characters')
+    location = models.ForeignKey(Location, on_delete=models.SET_NULL, null=True, blank=True)
+    hostility = models.TextField(choices=HOSTILITY_CHOICES, default=NEUTRAL, blank=True)
+    related_organizations = models.ManyToManyField(Organization, related_name='character_organizations')
+    related_characters = models.ManyToManyField('self', related_name='related_characters', blank=True)
     description = models.TextField(null=True, blank=True)
 
 
@@ -95,8 +79,8 @@ class PlayerCharacter(Character):
     player = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
 
 
-class NonPlayerCharacter(Character):
-    hostility = models.TextField(choices=HOSTILITY, default="N")
+# class NonPlayerCharacter(Character):
+#     hostility = models.TextField(choices=HOSTILITY_CHOICES, default=NEUTRAL)
 
 
 class Event(models.Model):
@@ -119,9 +103,9 @@ class Note(models.Model):
     start_time = models.DateTimeField(null=True, blank=True)
     end_time = models.DateTimeField(null=True, blank=True)
     race = models.TextField(null=True, blank=True)
-    clazz = models.TextField(choices=CLASSES, null=True, blank=True)
+    class_field = models.TextField(choices=CLASSES, null=True, blank=True)
     level = models.PositiveSmallIntegerField(default=0, null=True, blank=True)
-    hostility = models.TextField(choices=HOSTILITY, default="N", null=True, blank=True)
+    hostility = models.TextField(choices=HOSTILITY_CHOICES, default=NEUTRAL, null=True, blank=True)
     locations = models.ManyToManyField(Location, related_name='note_locations', blank=True)
     organizations = models.ManyToManyField(Organization, related_name='note_organizations',
                                            blank=True)

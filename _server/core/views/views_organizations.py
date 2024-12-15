@@ -2,7 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpRequest, HttpResponse, HttpResponseBadRequest
 from django.shortcuts import get_object_or_404, redirect, render
 
-from ..models import HOSTILITY, Location, Organization, Character, Event, Note
+from ..models import HOSTILITY_CHOICES, Location, Organization, Character, Event, Note
 from .utils import *
 from ..forms import OrganizationForm
 

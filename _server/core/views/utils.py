@@ -7,8 +7,8 @@ from django.http import HttpRequest, HttpResponse, HttpResponseBadRequest, HttpR
 from django.shortcuts import redirect, render
 from typing import Type
 
-from ..models import CLASSES, HOSTILITY, Campaign, Location, Organization, Character, \
-    PlayerCharacter, NonPlayerCharacter, Event, Note
+from ..models import CLASSES, HOSTILITY_CHOICES, Campaign, Location, Organization, Character, \
+    PlayerCharacter, Event, Note
 
 
 ASSET_URL = os.environ.get("ASSET_URL", "")
