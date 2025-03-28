@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Campaign Manager - Home</title>
+    <link rel="stylesheet" href="/static/{{css_file}}" />
+    <script type="module" src="/static/{{js_file}}"></script>
+</head>
+<body>
+    <div id="header">
+        <a id="back-to-home" href="/">
+            <h2>Campaign Manager</h2>
+        </a>
+        <div id="user-actions">
+            <a href="/campaigns/">My Campaigns</a>
+            <a href="/users/logout/">Sign Out</a>
+        </div>
+    </div>
+    <h1>User Profile</h1>
+    <div id="user-actions" class="note-actions">
+        <a class="delete-button" href="/users/{{user.id}}/delete/">Delete User</a>
+    </div>
+    <div class="info-card user-card">
+        <h3>{{user.first_name}} {{user.last_name}}</h3>
+        <p>{{user.username}}</p>
+    </div>
+</body>
+</html>

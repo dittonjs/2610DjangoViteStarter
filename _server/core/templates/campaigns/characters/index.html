@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Campaign Manager - Home</title>
+    <link rel="stylesheet" href="/static/{{css_file}}" />
+    <script type="module" src="/static/{{js_file}}"></script>
+</head>
+<body>
+    <div id="header">
+        <a id="back-to-home" href="/">
+            <h2>Campaign Manager</h2>
+        </a>
+        <div id="user-actions">
+            <a href="/campaigns/">My Campaigns</a>
+            <a href="/users/logout/">Sign Out</a>
+        </div>
+    </div>
+    <h1>Characters in {{current_campaign.name}}</h1>
+    <a class="new-button" href="new/">New Character</a>
+    {% if characters %}
+        {% for character in characters %}
+            <div class="info-card character-card">
+                <h3><a href="{{character.id}}/">{{character.name}}</a></h3>
+                <p>{% if character.clazz %}Level {{character.level}} {% endif %}{{character.race}}{% if character.clazz %} {{character.clazz}}{% endif %}</p>
+                {% if character.hostility %}
+                    <p>
+                        {% if character.hostility == 'H' %}
+                            Hostile
+                        {% elif character.hostility == 'F' %}
+                            Friendly
+                        {% else %}
+                            Neutral
+                        {% endif %}
+                    </p>
+                {% endif %}
+                <p>From location:
+                    {% if character.from_location %}
+                        <a href="/campaigns/{{current_campaign.id}}/locations/{{character.from_location.id}}/">{{character.from_location.name}}</a>
+                    {% else %}
+                        Unknown
+                    {% endif %}
+                </p>
+                <p>{{character.description}}</p>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>No characters have been added to this campaign.</p>
+    {% endif %}
+</body>
+</html>

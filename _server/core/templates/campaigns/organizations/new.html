@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Campaign Manager - Home</title>
+    <link rel="stylesheet" href="/static/{{css_file}}" />
+    <script type="module" src="/static/{{js_file}}"></script>
+</head>
+<body>
+    <div id="header">
+        <a id="back-to-home" href="/">
+            <h2>Campaign Manager</h2>
+        </a>
+        <div id="user-actions">
+            <a href="/campaigns/">My Campaigns</a>
+            <a href="/users/logout/">Sign Out</a>
+        </div>
+    </div>
+    <h1>Add Organization</h1>
+    <form id="new-organization" action="" method="post">
+        {% csrf_token %}
+        <label>
+            Name
+            {{ form.name }}
+        </label>
+        <label>
+            Hostility
+            {{ form.hostility }}
+        </label>
+        <label>
+            Related Organizations
+            {{ form.related_organizations }}
+        </label>
+        <label>
+            Description
+            {{ form.description }}
+        </label>
+        <button>Save and Return</button>
+    </form>
+</body>
+</html>

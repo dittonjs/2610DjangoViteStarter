@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Campaign Manager - Home</title>
+    <link rel="stylesheet" href="/static/{{css_file}}" />
+    <script type="module" src="/static/{{js_file}}"></script>
+</head>
+<body>
+    <div id="header">
+        <a id="back-to-home" href="/">
+            <h2>Campaign Manager</h2>
+        </a>
+        <div id="user-actions">
+            <a href="/campaigns/">My Campaigns</a>
+            <a href="/users/logout/">Sign Out</a>
+        </div>
+    </div>
+    <h1>Organizations in {{current_campaign.name}}</h1>
+    <a class="new-button" href="new/">Add Organization</a>
+    {% if organizations %}
+        {% for organization in organizations %}
+            <div class="info-card organization-card">
+                <h3><a href="{{organization.id}}/">{{organization.name}}</a></h3>
+                <p>
+                    {% if location.hostility == 'H' %}
+                        Hostile
+                    {% elif location.hostility == 'F' %}
+                        Friendly
+                    {% else %}
+                        Neutral
+                    {% endif %}
+                </p>
+                <p>Location:
+                    {% if organization.location %}
+                        <a href="/campaigns/{{current_campaign.id}}/locations/{{organization.location.id}}/">{{organization.location.name}}</a>
+                    {% else %}
+                        None
+                    {% endif %}
+                </p>
+                <p>{{organization.description}}</p>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>No locations have been added to this campaign.</p>
+    {% endif %}
+</body>
+</html>

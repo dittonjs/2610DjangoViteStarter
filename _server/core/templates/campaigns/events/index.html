@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Campaign Manager - Home</title>
+    <link rel="stylesheet" href="/static/{{css_file}}" />
+    <script type="module" src="/static/{{js_file}}"></script>
+</head>
+<body>
+    <div id="header">
+        <a id="back-to-home" href="/">
+            <h2>Campaign Manager</h2>
+        </a>
+        <div id="user-actions">
+            <a href="/campaigns/">My Campaigns</a>
+            <a href="/users/logout/">Sign Out</a>
+        </div>
+    </div>
+    <h1>Events Recorded in {{current_campaign.name}}</h1>
+    <a class="new-button" href="new/">New Event</a>
+    {% if events %}
+        {% for event in events %}
+            <div class="info-card event-card">
+                <h3><a href="{{event.id}}/">{{event.title}}</a></h3>
+                <p>{{event.start_time}}{% if event.end_time %} - {{event.end_time}}{% endif %}</p>
+                <p>{{event.description}}</p>
+                <p>Location:
+                    {% if event.location %}
+                        <a href="/campaigns/{{current_campaign.id}}/locations/{{event.location.id}}/">{{event.location.name}}</a>
+                    {% else %}
+                        None set
+                    {% endif %}
+                </p>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>No events have been recorded in this campaign.</p>
+    {% endif %}
+</body>
+</html>

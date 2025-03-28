@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Campaign Manager - Home</title>
+    <link rel="stylesheet" href="/static/{{css_file}}" />
+    <script type="module" src="/static/{{js_file}}"></script>
+</head>
+<body>
+    <div id="header">
+        <a id="back-to-home" href="/">
+            <h2>Campaign Manager</h2>
+        </a>
+        <div id="user-actions">
+            <a href="/campaigns/">My Campaigns</a>
+            <a href="/users/logout/">Sign Out</a>
+        </div>
+    </div>
+    <h1>New Character</h1>
+    <form id="new-character" action="" method="post">
+        {% csrf_token %}
+        <label>
+            Character Name
+            {{ form.name }}
+        </label>
+        <label>
+            Race
+            {{ form.race }}
+        </label>
+        <label>
+            Class
+            {{ form.class_field }}
+        </label>
+        <label>
+            Level
+            {{ form.level }}
+        </label>
+        <label>
+            From Location
+            {% if locations %}
+                {{ form.location }}
+            {% else %}
+                <em>No locations have been added to this campaign.</em>
+            {% endif %}
+        </label>
+        <label>
+            Organizations
+            {% if organizations %}
+                {{ form.related_organizations }}
+            {% else %}
+                <em>No organizations have been added to this campaign.</em>
+            {% endif %}
+        </label>
+        <label>
+            Hostility
+            {{ form.hostility }}
+        </label>
+        <label>
+            Description
+            {{ form.description }}
+        </label>
+        <button>Save and Return</button>
+    </form>
+</body>
+</html>

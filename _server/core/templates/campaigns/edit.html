@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Campaign Manager - Home</title>
+    <link rel="stylesheet" href="/static/{{css_file}}" />
+    <script type="module" src="/static/{{js_file}}"></script>
+</head>
+<body>
+    <div id="header">
+        <a id="back-to-home" href="/">
+            <h2>Campaign Manager</h2>
+        </a>
+        <div id="user-actions">
+            <a href="/campaigns/">My Campaigns</a>
+            <a href="/users/logout/">Sign Out</a>
+        </div>
+    </div>
+    <h1>Edit Campaign</h1>
+    <form id="edit-campaign" action="" method="post">
+        {% csrf_token %}
+        <label>
+            Campaign Name
+            <input type="text" name="name" id="campaign-name" value="{{current_campaign.name}}" required />
+        </label>
+        <label>
+            Description
+            <textarea name="description" id="campaign-description" value="{{current_campaign.description}}"></textarea>
+        </label>
+        <label>
+            <input type="checkbox" name="is_public" id="campaign-public" {% if current_campaign.is_public %}checked{% endif %} />
+            Set Public
+        </label>
+        <label>
+            <label for="approved-users">Shared Users</label>
+                {% if users %}
+                    <select name="approved_users" id="approved-users" multiple>
+                        {% for user in users %}
+                            <option value="{{ user.id }}" {% if user in current_campaign.approved_users %}selected{% endif %}>{{ user.username }}</option>
+                        {% endfor %}
+                    </select>
+                    <p class="form-note">Hold Ctrl (Windows) or Cmd (Mac) to select multiple users.</p>
+                {% else %}
+                    <p class="form-note">No other users could be found.</p>
+                {% endif %}
+        </label>
+        <button>Save and Return</button>
+    </form>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Campaign Manager - Home</title>
+    <link rel="stylesheet" href="/static/{{css_file}}" />
+    <script type="module" src="/static/{{js_file}}"></script>
+</head>
+<body>
+    <div id="header">
+        <a id="back-to-home" href="/">
+            <h2>Campaign Manager</h2>
+        </a>
+        <div id="user-actions">
+            <a href="/campaigns/">My Campaigns</a>
+            <a href="/users/logout/">Sign Out</a>
+        </div>
+    </div>
+    <h1>{{user.username}}'s Campaigns</h1>
+    <a class="new-button" href="new/">New Campaign</a>
+    {% for campaign in campaigns %}
+        <div class="info-card campaign-card">
+            <h3>{{campaign.name}}</h3>
+            <p>{{campaign.description}}</p>
+            <a href="/campaigns/{{campaign.id}}">View</a>
+        </div>
+    {% endfor %}
+</body>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Campaign Manager - Home</title>
+    <link rel="stylesheet" href="/static/{{css_file}}" />
+    <script type="module" src="/static/{{js_file}}"></script>
+</head>
+<body>
+    <div id="header">
+        <a id="back-to-home" href="/">
+            <h2>Campaign Manager</h2>
+        </a>
+        <div id="user-actions">
+            <a href="/campaigns/">My Campaigns</a>
+            <a href="/users/logout/">Sign Out</a>
+        </div>
+    </div>
+    <h1>{{current_organization.name}}</h1>
+    <em>Organization in campaign {{current_campaign.name}}</em>
+    <div class="note-actions">
+        <a class="edit-button" href="edit/">Edit</a>
+        <a class="delete-button" href="delete/">Delete</a>
+    </div>
+    <p>
+        {% if location.hostility == 'H' %}
+            Hostile
+        {% elif location.hostility == 'F' %}
+            Friendly
+        {% else %}
+            Neutral
+        {% endif %}
+    </p>
+    <div class="info-card">
+        <h3>Location:</h3>
+        {% if current_organization.location %}
+            <a href="/campaigns/{{current_campaign.id}}/locations/{{current_organization.location.id}}/">{{current_organization.location.name}}</a>
+        {% else %}
+            None
+        {% endif %}
+    </div>
+    <div class="info-card">
+        <h3>Description</h3>
+        <p>{{current_organization.description}}</p>
+    </div>
+    <div class="info-card">
+        <h3>Related Organizations:</h3>
+        {% if related_organizations %}
+            <ul>
+                {% for organization in related_organizations %}
+                    <li><a href="/campaigns/{{current_campaign.id}}/organizations/{{organization.id}}/">{{organization.name}}</a></li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            None
+        {% endif %}
+    </div>
+    <div class="info-card">
+        <h3>Characters belonging to this Organization:</h3>
+        {% if characters %}
+            <ul>
+                {% for character in characters %}
+                    <li><a href="/campaigns/{{current_campaign.id}}/characters/{{character.id}}/">{{character.name}}</a></li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            None added
+        {% endif %}
+    </div>
+    <div class="info-card">
+        <h3>Events involving this Organization:</h3>
+        {% if events %}
+            <ul>
+                {% for event in events %}
+                    <li><a href="/campaigns/{{current_campaign.id}}/events/{{event.id}}/">{{event.title}}</a></li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            None added
+        {% endif %}
+    </div>
+    {% if notes %}
+        <div class="info-card">
+            <h3>Notes related to this Organization:</h3>
+            <ul>
+                {% for note in notes %}
+                    <li><a href="/campaigns/{{current_campaign.id}}/notes/{{note.id}}/">{{note.title}}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Campaign Manager - Home</title>
+    <link rel="stylesheet" href="/static/{{css_file}}" />
+    <script type="module" src="/static/{{js_file}}"></script>
+</head>
+<body>
+    <div id="header">
+        <a id="back-to-home" href="/">
+            <h2>Campaign Manager</h2>
+        </a>
+        <div id="user-actions">
+            <a href="/campaigns/">My Campaigns</a>
+            <a href="/users/logout/">Sign Out</a>
+        </div>
+    </div>
+    <h1>Record Event</h1>
+    <form id="new-event" action="" method="post">
+        {% csrf_token %}
+        <label>
+            Event Title
+            <input type="text" name="title" id="event-title" required />
+        </label>
+        <label>
+            Start Time
+            <input type="datetime-local" name="start_time" id="event-start-time" required />
+        </label>
+        <label>
+            End Time
+            <input type="datetime-local" name="end_time" id="event-end-time" />
+        </label>
+        <label>
+            Location
+            {% if locations %}
+                <select name="location" id="event-location">
+                    {% for location in locations %}
+                        <option value="{{location.id}}">{{location.name}}</option>
+                    {% endfor %}
+                </select>
+            {% else %}
+                <em>No locations have been added to this campaign.</em>
+            {% endif %}
+        </label>
+        <label>
+            Involved Organizations
+            {% if organizations %}
+                <select name="involved_organizations" id="event-organizations" multiple>
+                    {% for organization in organizations %}
+                        <option value="{{organization.id}}">{{organization.name}}</option>
+                    {% endfor %}
+                </select>
+            {% else %}
+                <em>No organizations have been added to this campaign.</em>
+            {% endif %}
+        </label>
+        <label>
+            Involved Characters
+            {% if characters %}
+                <select name="involved_characters" id="event-involved-characters" multiple>
+                    {% for character in characters %}
+                        <option value="{{character.id}}">{{character.name}}</option>
+                    {% endfor %}
+                </select>
+            {% else %}
+                <em>No characters have been added to this campaign.</em>
+            {% endif %}
+        </label>
+        <label>
+            Description
+            <textarea name="description" id="event-description"></textarea>
+        </label>
+        <button>Save and Return</button>
+    </form>
+</body>
+</html>

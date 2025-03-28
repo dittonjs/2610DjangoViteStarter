@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Campaign Manager - Home</title>
+    <link rel="stylesheet" href="/static/{{css_file}}" />
+    <script type="module" src="/static/{{js_file}}"></script>
+</head>
+<body>
+    <div id="header">
+        <a id="back-to-home" href="/">
+            <h2>Campaign Manager</h2>
+        </a>
+        <div id="user-actions">
+            <a href="/campaigns/">My Campaigns</a>
+            <a href="/users/logout/">Sign Out</a>
+        </div>
+    </div>
+    <h1>Edit Organization</h1>
+    <form id="edit-organization" action="" method="post">
+        {% csrf_token %}
+        <label>
+            Name
+            <input type="text" name="name" id="organization-name" value="{{current_organization.name}}" required />
+        </label>
+        <label>
+            Hostility
+            <select name="hostility" id="organization-hostility" required>
+                <option value="F" {% if current_organization.hostility == 'F' %}selected{% endif %}>Friendly</option>
+                <option value="N" {% if current_organization.hostility == 'N' %}selected{% endif %}>Neutral</option>
+                <option value="H" {% if current_organization.hostility == 'H' %}selected{% endif %}>Hostile</option>
+            </select>
+        </label>
+        <label>
+            Neighboring Locations
+            {% if locations %}
+                <select name="location" id="organization-location">
+                    {% for location in locations %}
+                        <option value="{{location.id}}" {% if current_organization.location == location %}selected{% endif %}>{{location.name}}</option>
+                    {% endfor %}
+                </select>
+            {% else %}
+                <em>No other locations have been added to this campaign.</em>
+            {% endif %}
+        </label>
+        <label>
+            Description
+            <textarea name="description" id="organization-description">{{current_organization.description}}</textarea>
+        </label>
+        <label>
+            Related Organizations
+            {% if organizations %}
+                <select name="related_organizations" id="organization-related" multiple>
+                    {% for organization in organizations %}
+                        <option value="{{organization.id}}" {% if organization in related_organizations %}selected{% endif %}>{{organization.name}}</option>
+                    {% endfor %}
+                </select>
+            {% else %}
+                <em>No other organizations have been added to this campaign.</em>
+            {% endif %}
+        </label>
+        <button>Save and Return</button>
+    </form>
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Campaign Manager - Home</title>
+    <link rel="stylesheet" href="/static/{{css_file}}" />
+    <script type="module" src="/static/{{js_file}}"></script>
+</head>
+<body>
+    <div id="header">
+        <a id="back-to-home" href="/">
+            <h2>Campaign Manager</h2>
+        </a>
+        <div id="user-actions">
+            <a href="/campaigns/">My Campaigns</a>
+            <a href="/users/logout/">Sign Out</a>
+        </div>
+    </div>
+    <h1>{{current_event.title}}</h1>
+    <em>Event in campaign {{current_campaign.name}}</em>
+    <div class="note-actions">
+        <a class="edit-button" href="edit/">Edit</a>
+        <a class="delete-button" href="delete/">Delete</a>
+    </div>
+    <p>{{current_event.start_time}}{% if current_event.end_time %} - {{current_event.end_time}}{% endif %}</p>
+    <div class="info-card">
+        <p>{{current_event.description}}</p>
+    </div>
+    <div class="info-card">
+        <h3>Location</h3>
+        {% if current_event.location %}
+            <p><a href="/campaigns/{{current_campaign.id}}/locations/{{current_event.location.id}}/">{{current_event.location.name}}</a></p>
+        {% else %}
+            <p>None set</p>
+        {% endif %}
+    </div>
+    <div class="info-card">
+        <h3>Involved Organizations</h3>
+        {% if involved_organizations %}
+            <ul>
+                {% for organization in involved_organizations %}
+                    <li><a href="/campaigns/{{current_campaign.id}}/organizations/{{organization.id}}/">{{organization.name}}</a></li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>None set</p>
+        {% endif %}
+    </div>
+    <div class="info-card">
+        <h3>Involved Characters</h3>
+        {% if involved_characters %}
+            <ul>
+                {% for character in involved_characters %}
+                    <li><a href="/campaigns/{{current_campaign.id}}/characters/{{character.id}}/">{{character.name}}</a></li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>None set</p>
+        {% endif %}
+    </div>
+</body>
+</html>
