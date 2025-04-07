@@ -12,7 +12,7 @@ This application is a hybrid MPA and SPA. It reuses all of the login stuff that 
 
 ## Initial Setup
 1. Change the name property in the `pyproject.toml` file to be something unique to your project.
-1. In the root directory, install the python dependencies `poetry install`
+1. In the root directory, install the python dependencies `poetry install --no-root`
 2. In the `client` directory, install the javascript dependencies `npm install`
 3. In the `_server` directory, create a new file called `.env`
 4. Copy the contents of `_server/.env.example` into the newly created `.env` file.
