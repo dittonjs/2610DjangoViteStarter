@@ -16,7 +16,7 @@ This application is a hybrid MPA and SPA. It reuses all of the login stuff that 
 2. In the `client` directory, install the javascript dependencies `npm install`
 3. In the `_server` directory, create a new file called `.env`
 4. Copy the contents of `_server/.env.example` into the newly created `.env` file.
-5. Activate the poetry env `poetry shell`
+5. Activate the poetry env `poetry shell`, or, if you do not have the poetry shell plugin use `poetry run <the command you want to run>` to run somesomething
 6. In the `_server` directory, run the migrations `python manage.py migrate`
 
 ## Running the appliction
